@@ -32,7 +32,7 @@ public class SnapshotFile {
   @Getter private Set<Snapshot> snapshots = Collections.synchronizedSortedSet(new TreeSet<>());
   private Set<Snapshot> debugSnapshots = Collections.synchronizedSortedSet(new TreeSet<>());
 
-  SnapshotFile(String srcDirPath, String fileName, Class<?> testClass) throws IOException {
+  public SnapshotFile(String srcDirPath, String fileName, Class<?> testClass) throws IOException {
     this.testClass = testClass;
     this.fileName = srcDirPath + File.separator + fileName;
     log.info("Snapshot File: " + this.fileName);
