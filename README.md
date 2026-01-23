@@ -33,12 +33,12 @@ testImplementation("org.slf4j:slf4j-simple:2.0.0-alpha0")
 
 // Optional: Many will want to serialize into JSON.  In this case you should also add the Jackson plugin
 testImplementation 'io.github.origin-energy:java-snapshot-testing-plugin-jackson:4.+'
-testImplementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
-testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
+testImplementation 'com.fasterxml.jackson.core:jackson-core:2.20.1'
+testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.20.1'
 
 // Optional: If you want Jackson to serialize Java 8 date/time types or Optionals you should also add the following dependencies
-testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.3'
-testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3'
+testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.20.1'
+testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.1'
 ```
 
 2. Create `snapshot.properties` and configure your global settings. Be sure to set `output-dir` appropriately for your
@@ -49,8 +49,8 @@ testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3'
  ```text
 serializer=au.com.origin.snapshots.serializers.v1.ToStringSnapshotSerializer
 serializer.base64=au.com.origin.snapshots.serializers.v1.Base64SnapshotSerializer
-serializer.json=au.com.origin.snapshots.jackson.serializers.v1.JacksonSnapshotSerializer
-serializer.orderedJson=au.com.origin.snapshots.jackson.serializers.v1.DeterministicJacksonSnapshotSerializer
+serializer.json=au.com.origin.snapshots.jackson3.serializers.v1.JacksonSnapshotSerializer
+serializer.orderedJson=au.com.origin.snapshots.jackson3.serializers.v1.DeterministicJacksonSnapshotSerializer
 comparator=au.com.origin.snapshots.comparators.v1.PlainTextEqualsComparator
 reporters=au.com.origin.snapshots.reporters.v1.PlainTextSnapshotReporter
 snapshot-dir=__snapshots__
@@ -154,11 +154,11 @@ Plugins
     - You need jackson on your classpath (Gradle example)
       ```groovy
          // Required java-snapshot-testing peer dependencies
-         testImplementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
-         testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
+         testImplementation 'com.fasterxml.jackson.core:jackson-core:2.20.1'
+         testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.20.1'
          // Optional java-snapshot-testing peer dependencies
-         testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.3'
-         testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3'
+         testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.20.1'
+         testRuntimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.1'
       ```
 
 ## How does it work?
@@ -466,8 +466,8 @@ For example:
  ```text
 serializer=au.com.origin.snapshots.serializers.v1.ToStringSnapshotSerializer
 serializer.base64=au.com.origin.snapshots.serializers.v1.Base64SnapshotSerializer
-serializer.json=au.com.origin.snapshots.jackson.serializers.v1.JacksonSnapshotSerializer
-serializer.orderedJson=au.com.origin.snapshots.jackson.serializers.v1.DeterministicJacksonSnapshotSerializer
+serializer.json=au.com.origin.snapshots.jackson3.serializers.v1.JacksonSnapshotSerializer
+serializer.orderedJson=au.com.origin.snapshots.jackson3.serializers.v1.DeterministicJacksonSnapshotSerializer
 comparator=au.com.origin.snapshots.comparators.v1.PlainTextEqualsComparator
 reporters=au.com.origin.snapshots.reporters.v1.PlainTextSnapshotReporter
 snapshot-dir=__snapshots__

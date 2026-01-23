@@ -1,88 +1,119 @@
-task javadocJar(type: Jar) {
+import org.gradle.api.publish.maven.MavenPublication
+import groovy.xml.XmlUtil
+
+tasks.register('javadocJar', Jar) {
     archiveClassifier.set('javadoc')
-    from javadoc
+    from tasks.named('javadoc')
 }
 
-task sourcesJar(type: Jar) {
+tasks.register('sourcesJar', Jar) {
     archiveClassifier.set('sources')
     from sourceSets.main.allSource
 }
 
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
 apply plugin: 'net.researchgate.release'
 
-// Sign for maven central deployment
-if (project.hasProperty("sign")) {
-    apply plugin: 'signing'
-    signing {
-        def signingKey = findProperty("signingKey")
-        def signingPassword = findProperty("signingPassword")
-        useInMemoryPgpKeys(signingKey, signingPassword)
-        sign configurations.archives
-    }
-
-    // previously the plugin was using the `build` version which did not include the shadowed dependencies
-    signArchives.dependsOn 'shadowJar'
-}
-
-// Maven Central Publishing
+// Maven Central Publishing (Gradle 7/8+)
 if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
 
+    // If you're using the nexus-staging plugin elsewhere, keep this block.
+    // (This config is unrelated to Gradle's 'maven' plugin and is still fine.)
     nexusStaging {
         username project.property("ossrhUsername")
         password project.property("ossrhPassword")
         packageGroup 'io.github.origin-energy'
     }
 
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    // Ensure the shaded jar is what gets published as the main artifact.
+    // ShadowJar defaults to classifier "all". If you want the published jar to be the default artifact
+    // (no classifier), uncomment the next block.
+    //
+    // tasks.named('shadowJar') {
+    //     archiveClassifier.set('')
+    // }
 
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                // Publish the shaded jar instead of the plain jar
+                artifact(tasks.named('shadowJar'))
 
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
+                // Attach sources + javadoc
+                artifact(tasks.named('sourcesJar'))
+                artifact(tasks.named('javadocJar'))
 
-                pom.project {
-                    name 'java-snapsho-testing'
-                    packaging 'jar'
-                    description 'Snapshot Testing for Java'
-                    url 'https://github.com/origin-energy/java-snapshot-testing'
+                pom {
+                    name = 'java-snapsho-testing'
+                    packaging = 'jar'
+                    description = 'Snapshot Testing for Java'
+                    url = 'https://github.com/origin-energy/java-snapshot-testing'
+
                     scm {
-                        connection 'scm:git:https://github.com/origin-energy/java-snapshot-testing'
-                        url 'https://github.com/origin-energy/java-snapshot-testing'
+                        connection = 'scm:git:https://github.com/origin-energy/java-snapshot-testing'
+                        url = 'https://github.com/origin-energy/java-snapshot-testing'
                     }
 
                     licenses {
                         license {
-                            name 'MIT License'
-                            url 'http://www.opensource.org/licenses/mit-license.php'
+                            name = 'MIT License'
+                            url = 'http://www.opensource.org/licenses/mit-license.php'
                         }
                     }
 
                     developers {
                         developer {
-                            id 'jack.matthews'
-                            name 'Jack Matthews'
-                            email 'jack.matthews@origin.com.au'
+                            id = 'jack.matthews'
+                            name = 'Jack Matthews'
+                            email = 'jack.matthews@origin.com.au'
+                        }
+                    }
+
+                    // We clear out all the dependencies because we have shadowed them inside the jar
+                    withXml {
+                        def root = asNode()
+                        def deps = root.dependencies
+                        if (deps) {
+                            root.remove(deps)
                         }
                     }
                 }
+            }
+        }
 
-                // We clear out all the dependencies because we have shadowed them inside the jar
-                pom.whenConfigured {
-                    p -> p.dependencies = []
+        repositories {
+            maven {
+                def releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                def snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+                url = version.toString().endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+
+                credentials {
+                    username = project.property("ossrhUsername").toString()
+                    password = project.property("ossrhPassword").toString()
                 }
             }
         }
     }
 }
 
+// Sign for Maven Central deployment (Gradle 7/8+)
+if (project.hasProperty("sign")) {
+    apply plugin: 'signing'
+
+    signing {
+        def signingKey = findProperty("signingKey")
+        def signingPassword = findProperty("signingPassword")
+        useInMemoryPgpKeys(signingKey, signingPassword)
+
+        // Sign the publication (modern replacement for signing.signPom(deployment))
+        // Only works if maven-publish is applied (i.e., ossrh creds are present)
+        if (plugins.hasPlugin('maven-publish')) {
+            sign publishing.publications.mavenJava
+        }
+    }
+
+    // Keep the same intent: ensure shaded jar exists before publish/sign
+    tasks.matching { it.name.startsWith("publish") }.configureEach {
+        dependsOn tasks.named('shadowJar')
+    }
+}
