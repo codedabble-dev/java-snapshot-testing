@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>parent</artifactId>
+        <groupId>io.github.finoid</groupId>
+        <version>0.11.1</version>
+    </parent>
+
+    <groupId>io.github.finoid</groupId>
+    <artifactId>snapshot-testing-parent</artifactId>
+    <version>${revision}</version>
+    <name>finoid-snapshot-testing-parent</name>
+    <description>A Java library designed to streamline testing by integrating Testcontainers, data fakers, test
+        fixtures, snapshot testing.
+    </description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+
+        <checker-qual.version>3.51.1</checker-qual.version>
+        <!--        <commons-lang3.version>3.19.0</commons-lang3.version>-->
+        <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
+        <jspecify.version>1.0.0</jspecify.version>
+        <lombok.version>1.18.42</lombok.version>
+
+        <!-- This revision id (version) is overridden on deploy, so this revision number is only applicable for local usage -->
+        <revision>0.10.0</revision>
+
+        <!--        <spring-boot.version>3.5.9</spring-boot.version>-->
+
+        <code-quality.feature.enabled>false</code-quality.feature.enabled>
+        <!--        <code-quality.configuration.checkstyle.suppression-location>checkstyle/checkstyle-suppressions.xml-->
+        <!--        </code-quality.configuration.checkstyle.suppression-location>-->
+    </properties>
+
+    <modules>
+        <module>snapshot-testing-core</module>
+        <module>snapshot-testing-jackson</module>
+        <module>snapshot-testing-jackson3</module>
+        <module>snapshot-testing-junit5</module>
+        <module>snapshot-testing-junit6</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-dependencies</artifactId>-->
+            <!--                <version>${spring-boot.version}</version>-->
+            <!--                <type>pom</type>-->
+            <!--                <scope>import</scope>-->
+            <!--            </dependency>-->
+
+
+            <dependency>
+                <groupId>io.github.finoid</groupId>
+                <artifactId>snapshot-testing-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.finoid</groupId>
+                <artifactId>snapshot-testing-jackson</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.finoid</groupId>
+                <artifactId>snapshot-testing-jackson3</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.finoid</groupId>
+                <artifactId>snapshot-testing-junit5</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>io.github.finoid</groupId>-->
+            <!--                <artifactId>testify-core</artifactId>-->
+            <!--                <version>${revision}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.github.finoid</groupId>-->
+            <!--                <artifactId>testify-snapshot</artifactId>-->
+            <!--                <version>${revision}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.github.finoid</groupId>-->
+            <!--                <artifactId>testify-spring</artifactId>-->
+            <!--                <version>${revision}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.github.finoid</groupId>-->
+            <!--                <artifactId>testify-spring-autoconfigure</artifactId>-->
+            <!--                <version>${revision}</version>-->
+            <!--            </dependency>-->
+            <!--            -->
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.commons</groupId>-->
+            <!--                <artifactId>commons-lang3</artifactId>-->
+            <!--                <version>${commons-lang3.version}</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>${checker-qual.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.commons</groupId>-->
+        <!--            <artifactId>commons-lang3</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.jupiter</groupId>-->
+        <!--            <artifactId>junit-jupiter-api</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.jupiter</groupId>-->
+        <!--            <artifactId>junit-jupiter-engine</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.jupiter</groupId>-->
+        <!--            <artifactId>junit-jupiter-params</artifactId>-->
+        <!--        </dependency>-->
+        <!--        -->
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <version>${jspecify.version}</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.mockito</groupId>-->
+        <!--            <artifactId>mockito-junit-jupiter</artifactId>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <developers>
+        <developer>
+            <id>nicklaswallgren</id>
+            <name>Nicklas Wallgren</name>
+            <email>nicklas.wallgren@gmail.com</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/finoid/testify</url>
+        <connection>scm:git:https://github.com/finoid/testify.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/finoid/testify.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <url>https://github.com/finoid/testify</url>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                            <rules>
+                                <banDuplicateClasses>
+                                    <findAllDuplicates>true</findAllDuplicates>
+                                    <ignoreClasses>
+                                        <ignoreClass>module-info</ignoreClass>
+                                        <!-- Ignored due to shadowed classes in wiremock-standalone -->
+                                        <ignoreClass>org/jspecify/annotations/NullMarked</ignoreClass>
+                                        <ignoreClass>org/jspecify/annotations/NullUnmarked</ignoreClass>
+                                        <ignoreClass>org/jspecify/annotations/Nullable</ignoreClass>
+                                        <ignoreClass>org/jspecify/annotations/NonNull</ignoreClass>
+                                        <ignoreClass>org/jspecify/annotations/NonNull</ignoreClass>
+                                    </ignoreClasses>
+                                    <ignoreWhenIdentical>true</ignoreWhenIdentical>
+                                </banDuplicateClasses>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <configuration>
+                    <!-- Preserve important metadata -->
+                    <flattenMode>oss</flattenMode>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <!-- ensure proper cleanup -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <release>${maven.compiler.release}</release>
+
+                    <compilerArgs>
+                        <!-- To improve compatibility with Jackson ObjectMapper and Spring Boot -->
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+
+                    <annotationProcessorPaths>
+                        <annotationProcessorPath>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </annotationProcessorPath>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
