@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Snapshot Configuration ----------------------
+ * Snapshot Configuration.
  *
  * <p>Implement this interface when integrating `java-snapshot-testing` with a custom testing
  * library
@@ -19,7 +19,7 @@ public interface SnapshotConfig {
 
     /**
      * The base directory where files get written (excluding package directories) default:
-     * "src/test/java"
+     * "src/test/java".
      *
      * <p>You might want to override if you have tests under "src/test/integration" for example
      *
@@ -28,14 +28,14 @@ public interface SnapshotConfig {
     String getOutputDir();
 
     /**
-     * Subdirectory to store snapshots in
+     * Subdirectory to store snapshots in.
      *
      * @return name of subdirectory
      */
     String getSnapshotDir();
 
     /**
-     * Optional
+     * Optional.
      *
      * @return snapshots should be updated automatically without verification
      */
@@ -44,14 +44,14 @@ public interface SnapshotConfig {
     }
 
     /**
-     * Optional Override to supply your own custom serialization function
+     * Optional Override to supply your own custom serialization function.
      *
      * @return custom serialization function
      */
     SnapshotSerializer getSerializer();
 
     /**
-     * Optional Override to supply your own custom comparator function
+     * Optional Override to supply your own custom comparator function.
      *
      * @return custom comparator function
      */

@@ -16,7 +16,8 @@ public class SnapshotNameAnnotationWithDuplicatesTest {
         assertThrows(
             SnapshotExtensionException.class,
             () -> new SnapshotVerifier(new BaseSnapshotConfig(), testInfo.getTestClass().get()),
-            "Oops, looks like you set the same name of two separate snapshots @SnapshotName(\"hello_world\") in class au.com.origin.snapshots.SnapshotNameAnnotationTest");
+            "Oops, looks like you set the same name of two separate snapshots @SnapshotName(\"hello_world\") in "
+                + "class au.com.origin.snapshots.SnapshotNameAnnotationTest");
     }
 
     @SnapshotName("hello_world")

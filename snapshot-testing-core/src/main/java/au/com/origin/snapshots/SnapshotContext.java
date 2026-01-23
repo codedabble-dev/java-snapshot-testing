@@ -27,29 +27,25 @@ public class SnapshotContext {
 
     private final SnapshotConfig snapshotConfig;
     private final SnapshotFile snapshotFile;
-
-    @Getter
-    final Class<?> testClass;
-
-    @Getter
-    final Method testMethod;
-
-    final Object current;
     private final boolean isCI;
 
+    @Getter
+    private final Class<?> testClass;
+    @Getter
+    private final Method testMethod;
+    private final Object current;
+
+    @Setter
+    @Getter
+    private String scenario;
+    @Getter
+    private SnapshotHeader header = new SnapshotHeader();
     @Setter
     private SnapshotSerializer snapshotSerializer;
     @Setter
     private SnapshotComparator snapshotComparator;
     @Setter
     private List<SnapshotReporter> snapshotReporters;
-
-    @Setter
-    @Getter
-    String scenario;
-
-    @Getter
-    SnapshotHeader header = new SnapshotHeader();
 
     SnapshotContext(
         SnapshotConfig snapshotConfig,

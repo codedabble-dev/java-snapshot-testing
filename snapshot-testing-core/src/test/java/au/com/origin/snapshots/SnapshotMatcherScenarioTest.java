@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 @ExtendWith(MockitoExtension.class)
 class SnapshotMatcherScenarioTest {
 

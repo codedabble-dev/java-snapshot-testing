@@ -8,7 +8,7 @@ import au.com.origin.snapshots.serializers.SnapshotSerializer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This Serializer does a snapshot of the {@link Object#toString()} method
+ * This Serializer does a snapshot of the {@link Object#toString()} method.
  *
  * <p>Will render each toString() on a separate line
  */

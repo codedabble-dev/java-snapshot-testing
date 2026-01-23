@@ -5,8 +5,8 @@ import au.com.origin.snapshots.serializers.SnapshotSerializer;
 
 public class LowercaseToStringSnapshotConfig extends PropertyResolvingSnapshotConfig {
 
-  @Override
-  public SnapshotSerializer getSerializer() {
-    return new LowercaseToStringSerializer();
-  }
+    @Override
+    public SnapshotSerializer getSerializer() {
+        return new LowercaseToStringSerializer();
+    }
 }

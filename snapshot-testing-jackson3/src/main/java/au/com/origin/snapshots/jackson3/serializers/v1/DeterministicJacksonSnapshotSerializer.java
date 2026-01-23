@@ -11,6 +11,7 @@ import tools.jackson.databind.json.JsonMapper;
  *
  * <p>Note that collections will be ordered which mar or may not be desirable given your use case.
  */
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 public class DeterministicJacksonSnapshotSerializer extends JacksonSnapshotSerializer {
 
     /**

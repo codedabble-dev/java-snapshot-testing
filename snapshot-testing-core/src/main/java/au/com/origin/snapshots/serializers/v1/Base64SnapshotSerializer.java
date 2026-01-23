@@ -13,20 +13,19 @@ import java.util.Base64;
  * will be converted using `.getBytes(StandardCharsets.UTF_8)` method
  */
 public class Base64SnapshotSerializer implements SnapshotSerializer {
-    private static final ToStringSnapshotSerializer toStringSnapshotSerializer =
-        new ToStringSnapshotSerializer();
+    private static final ToStringSnapshotSerializer TO_STRING_SNAPSHOT_SERIALIZER = new ToStringSnapshotSerializer();
 
     @Override
     public Snapshot apply(Object object, SnapshotSerializerContext gen) {
         if (object == null) {
-            toStringSnapshotSerializer.apply("", gen);
+            TO_STRING_SNAPSHOT_SERIALIZER.apply("", gen);
         }
         byte[] bytes =
             object instanceof byte[]
                 ? (byte[]) object
                 : object.toString().getBytes(StandardCharsets.UTF_8);
         String encoded = Base64.getEncoder().encodeToString(bytes);
-        return toStringSnapshotSerializer.apply(encoded, gen);
+        return TO_STRING_SNAPSHOT_SERIALIZER.apply(encoded, gen);
     }
 
     @Override

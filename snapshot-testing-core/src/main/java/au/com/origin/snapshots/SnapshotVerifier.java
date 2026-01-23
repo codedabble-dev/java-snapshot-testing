@@ -39,13 +39,14 @@ public class SnapshotVerifier {
     }
 
     /**
-     * Instantiate before any tests have run for a given class
+     * Instantiate before any tests have run for a given class.
      *
      * @param frameworkSnapshotConfig configuration to use
      * @param failOnOrphans           should the test break if snapshots exist with no matching method in the
      *                                test class
      * @param testClass               reference to class under test
      */
+    @SneakyThrows
     public SnapshotVerifier(
         SnapshotConfig frameworkSnapshotConfig, Class<?> testClass, boolean failOnOrphans) {
         try {
@@ -53,7 +54,7 @@ public class SnapshotVerifier {
 
             UseSnapshotConfig customConfig = testClass.getAnnotation(UseSnapshotConfig.class);
             SnapshotConfig snapshotConfig =
-                customConfig == null ? frameworkSnapshotConfig : customConfig.value().newInstance();
+                customConfig == null ? frameworkSnapshotConfig : customConfig.value().getDeclaredConstructor().newInstance();
 
             // Matcher.quoteReplacement required for Windows
             String testFilename =

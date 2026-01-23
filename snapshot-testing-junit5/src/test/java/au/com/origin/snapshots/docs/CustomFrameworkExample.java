@@ -11,22 +11,22 @@ import org.junit.jupiter.api.TestInfo;
 // Notice we aren't using any framework extensions
 public class CustomFrameworkExample {
 
-  private static SnapshotVerifier snapshotVerifier;
+    private static SnapshotVerifier snapshotVerifier;
 
-  @BeforeAll
-  static void beforeAll() {
-    snapshotVerifier =
-        new SnapshotVerifier(new PropertyResolvingSnapshotConfig(), CustomFrameworkExample.class);
-  }
+    @BeforeAll
+    static void beforeAll() {
+        snapshotVerifier =
+            new SnapshotVerifier(new PropertyResolvingSnapshotConfig(), CustomFrameworkExample.class);
+    }
 
-  @AfterAll
-  static void afterAll() {
-    snapshotVerifier.validateSnapshots();
-  }
+    @AfterAll
+    static void afterAll() {
+        snapshotVerifier.validateSnapshots();
+    }
 
-  @Test
-  void shouldMatchSnapshotOne(TestInfo testInfo) {
-    Expect expect = Expect.of(snapshotVerifier, testInfo.getTestMethod().get());
-    expect.toMatchSnapshot("Hello World");
-  }
+    @Test
+    void shouldMatchSnapshotOne(TestInfo testInfo) {
+        Expect expect = Expect.of(snapshotVerifier, testInfo.getTestMethod().get());
+        expect.toMatchSnapshot("Hello World");
+    }
 }

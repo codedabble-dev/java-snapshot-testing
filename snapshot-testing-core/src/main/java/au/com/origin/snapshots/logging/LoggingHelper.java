@@ -1,7 +1,10 @@
 package au.com.origin.snapshots.logging;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoggingHelper {
 
     public static void deprecatedV5(Logger log, String message) {

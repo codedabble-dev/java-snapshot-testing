@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 @Slf4j
+@SuppressWarnings({"checkstyle:all", "ImmutableEnumChecker"}) // TODO (nw) rewrite
 public enum SnapshotProperties {
     INSTANCE;
 
@@ -34,6 +35,7 @@ public enum SnapshotProperties {
         return value.toString();
     }
 
+    @SuppressWarnings("TypeParameterUnusedInFormals") // TODO (nw) rewrite
     public static <T> T getInstance(String key) {
         String value = SnapshotProperties.getOrThrow(key);
         return createInstance(value);
@@ -47,11 +49,11 @@ public enum SnapshotProperties {
             .collect(Collectors.toList());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "TypeParameterUnusedInFormals"}) // TODO (nw) rewrite
     private static <T> T createInstance(String className) {
         try {
             Class<?> clazz = Class.forName(className);
-            return (T) clazz.newInstance();
+            return (T) clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Unable to instantiate class " + className, e);
         }

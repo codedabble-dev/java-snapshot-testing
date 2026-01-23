@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 
 public class PlainTextSnapshotReporter implements SnapshotReporter {
 
+    @SuppressWarnings("UnnecessaryLambda") // TODO (nw) rewrite
     private static final Supplier<IllegalStateException> NO_DIFF_EXCEPTION_SUPPLIER =
         () ->
             new IllegalStateException(

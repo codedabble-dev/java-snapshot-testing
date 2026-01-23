@@ -22,7 +22,8 @@ public class OnLoadSnapshotFileTest {
 
     private static final String SNAPSHOT_FILE_PATH =
         "src/test/java/au/com/origin/snapshots/__snapshots__/OnLoadSnapshotFileTest.snap";
-    private final SnapshotConfig CUSTOM_SNAPSHOT_CONFIG = new BaseSnapshotConfig();
+
+    private static final SnapshotConfig CUSTOM_SNAPSHOT_CONFIG = new BaseSnapshotConfig();
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -42,10 +43,10 @@ public class OnLoadSnapshotFileTest {
             try (FileOutputStream fileStream = new FileOutputStream(file, false)) {
                 fileStream.write(snapshot.getBytes(StandardCharsets.UTF_8));
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Unable to write debug file ", e);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Unable to write debug file ", e);
         }
     }
 

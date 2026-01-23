@@ -15,10 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DeterministicJacksonSnapshotSerializer
     extends au.com.origin.snapshots.jackson.serializers.v1.DeterministicJacksonSnapshotSerializer {
-  public DeterministicJacksonSnapshotSerializer() {
-    super();
-    LoggingHelper.deprecatedV5(
-        log,
-        "Update to `au.com.origin.snapshots.jackson.serializers.v1.DeterministicJacksonSnapshotSerializer` in `snapshot.properties`");
-  }
+    public DeterministicJacksonSnapshotSerializer() {
+        super();
+        LoggingHelper.deprecatedV5(
+            log,
+            "Update to `au.com.origin.snapshots.jackson.serializers.v1.DeterministicJacksonSnapshotSerializer` in `snapshot.properties`");
+    }
 }

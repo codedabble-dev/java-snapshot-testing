@@ -9,7 +9,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 public class SnapshotHeader extends HashMap<String, String> {
+
+    @SneakyThrows
+    public static SnapshotHeader fromJson(String json) {
+        SnapshotHeader snapshotHeader = new SnapshotHeader();
+
+        if (json == null) {
+            return snapshotHeader;
+        }
+
+        String regex = "\\\"(?<key>.*)\\\": \\\"(?<value>.*)\\\"";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(json);
+        while (m.find()) {
+            snapshotHeader.put(m.group("key"), m.group("value"));
+        }
+        return snapshotHeader;
+    }
 
     //
     // Manual JSON serialization/deserialization as I don't want to
@@ -28,22 +46,5 @@ public class SnapshotHeader extends HashMap<String, String> {
         }
         b.append("}");
         return b.toString();
-    }
-
-    @SneakyThrows
-    public static SnapshotHeader fromJson(String json) {
-        SnapshotHeader snapshotHeader = new SnapshotHeader();
-
-        if (json == null) {
-            return snapshotHeader;
-        }
-
-        String regex = "\\\"(?<key>.*)\\\": \\\"(?<value>.*)\\\"";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(json);
-        while (m.find()) {
-            snapshotHeader.put(m.group("key"), m.group("value"));
-        }
-        return snapshotHeader;
     }
 }

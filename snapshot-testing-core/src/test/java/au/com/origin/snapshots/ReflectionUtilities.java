@@ -1,11 +1,14 @@
 package au.com.origin.snapshots;
 
 import au.com.origin.snapshots.exceptions.SnapshotMatchException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReflectionUtilities {
 
     // FIXME consider guava reflection instead

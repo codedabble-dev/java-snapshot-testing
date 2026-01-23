@@ -38,9 +38,8 @@
 
         <!--        <spring-boot.version>3.5.9</spring-boot.version>-->
 
-        <code-quality.feature.enabled>false</code-quality.feature.enabled>
-        <!--        <code-quality.configuration.checkstyle.suppression-location>checkstyle/checkstyle-suppressions.xml-->
-        <!--        </code-quality.configuration.checkstyle.suppression-location>-->
+        <codequality-maven-plugin.version>0.12.8</codequality-maven-plugin.version>
+        <code-quality.feature.enabled>true</code-quality.feature.enabled>
     </properties>
 
     <modules>
@@ -179,6 +178,52 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>io.github.finoid</groupId>
+                <artifactId>codequality-maven-plugin</artifactId>
+                <version>${codequality-maven-plugin.version}</version>
+                <!-- The plugin must be registered as an extension for the error-prone static analyzer to function properly -->
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>maven-code-quality</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>code-quality</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <codeQuality>
+                        <enabled>${code-quality.feature.enabled}</enabled>
+                        <stepLogLevel>DEBUG</stepLogLevel>
+                        <violationFilters>DIFF_COVERAGE</violationFilters>
+                        <checkstyle>
+                            <enabled>${code-quality.feature.checkstyle}</enabled>
+                            <permissive>${code-quality.feature.checkstyle.permissive}</permissive>
+                            <executionMain>
+                                <suppressionLocation>${code-quality.configuration.checkstyle.suppression-location}
+                                </suppressionLocation>
+                            </executionMain>
+                            <executionTest>
+                                <suppressionLocation>${code-quality.configuration.checkstyle.suppression-location}
+                                </suppressionLocation>
+                            </executionTest>
+                        </checkstyle>
+                        <errorProne>
+                            <enabled>${code-quality.feature.error-prone}</enabled>
+                            <permissive>${code-quality.feature.error-prone.permissive}</permissive>
+                            <nullAwayEnabled>${code-quality.feature.null-away}</nullAwayEnabled>
+                        </errorProne>
+                        <checkerFramework>
+                            <enabled>${code-quality.feature.checker-framework}</enabled>
+                            <permissive>${code-quality.feature.checker-framework.permissive}</permissive>
+                        </checkerFramework>
+                    </codeQuality>
+                </configuration>
+            </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -76,8 +76,7 @@ class SnapshotTest {
     }
 
     @Test
-    public void
-    shouldParseSnapshotWithScenarioAndBodyWithSomethingSimilarToAnScenarioToConfuseRegex() {
+    public void shouldParseSnapshotWithScenarioAndBodyWithSomethingSimilarToAnScenarioToConfuseRegex() {
         Snapshot snapshot =
             Snapshot.parse(
                 Snapshot.builder()

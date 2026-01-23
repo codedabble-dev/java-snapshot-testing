@@ -13,11 +13,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 @ExtendWith(MockitoExtension.class)
 public class SnapshotIntegrationTest {
-
     private static final SnapshotConfig DEFAULT_CONFIG = new BaseSnapshotConfig();
-
     static SnapshotVerifier snapshotVerifier;
 
     @BeforeAll

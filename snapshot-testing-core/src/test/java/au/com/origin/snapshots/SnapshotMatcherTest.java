@@ -15,12 +15,11 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 @ExtendWith(MockitoExtension.class)
 class SnapshotMatcherTest {
-
     private static final String FILE_PATH =
         "src/test/java/au/com/origin/snapshots/__snapshots__/SnapshotMatcherTest.snap";
-
     static SnapshotVerifier snapshotVerifier;
 
     @BeforeAll

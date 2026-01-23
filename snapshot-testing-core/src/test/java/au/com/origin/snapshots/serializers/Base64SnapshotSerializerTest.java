@@ -36,6 +36,7 @@ public class Base64SnapshotSerializerTest {
     }
 
     @Test
+    @SuppressWarnings("checkstyle:LineLength")
     void shouldSnapshotAFile() throws Exception {
         Base64SnapshotSerializer serializer = new Base64SnapshotSerializer();
         File f = new File("src/test/resources/origin-logo.png");

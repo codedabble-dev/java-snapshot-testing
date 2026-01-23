@@ -5,19 +5,21 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 
 class SnapshotPrettyPrinter extends DefaultPrettyPrinter {
 
-  public SnapshotPrettyPrinter() {
-    super("");
-    Indenter lfOnlyIndenter = new DefaultIndenter("  ", "\n");
-    this.indentArraysWith(lfOnlyIndenter);
-    this.indentObjectsWith(lfOnlyIndenter);
+    @SuppressWarnings("deprecation") // TODO (nw) rewrite
+    public SnapshotPrettyPrinter() {
+        super("");
+        Indenter lfOnlyIndenter = new DefaultIndenter("  ", "\n");
+        this.indentArraysWith(lfOnlyIndenter);
+        this.indentObjectsWith(lfOnlyIndenter);
 
-    this._objectFieldValueSeparatorWithSpaces =
-        this._separators.getObjectFieldValueSeparator() + " ";
-  }
+        this._objectFieldValueSeparatorWithSpaces =
+            this._separators.getObjectFieldValueSeparator() + " ";
+    }
 
-  // It's a requirement
-  // @see https://github.com/FasterXML/jackson-databind/issues/2203
-  public DefaultPrettyPrinter createInstance() {
-    return new DefaultPrettyPrinter(this);
-  }
+    // It's a requirement
+    // @see https://github.com/FasterXML/jackson-databind/issues/2203
+    @Override
+    public DefaultPrettyPrinter createInstance() {
+        return new DefaultPrettyPrinter(this);
+    }
 }

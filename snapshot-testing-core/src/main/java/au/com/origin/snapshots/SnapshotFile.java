@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 public class SnapshotFile {
 
     public static final String SPLIT_STRING = "\n\n\n";
@@ -45,10 +46,10 @@ public class SnapshotFile {
                  new BufferedReader(
                      new InputStreamReader(new FileInputStream(this.fileName), StandardCharsets.UTF_8))) {
 
-            String sCurrentLine;
+            String currentLine;
 
-            while ((sCurrentLine = br.readLine()) != null) {
-                fileContent.append(sCurrentLine + "\n");
+            while ((currentLine = br.readLine()) != null) {
+                fileContent.append(currentLine + "\n");
             }
 
             String fileText = fileContent.toString();
@@ -81,10 +82,10 @@ public class SnapshotFile {
             try (FileOutputStream fileStream = new FileOutputStream(file, false)) {
                 fileStream.write(snapshot.raw().getBytes(StandardCharsets.UTF_8));
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Unable to create debug file ", e);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Unable to create debug file ", e);
         }
 
         return file;
@@ -101,8 +102,8 @@ public class SnapshotFile {
     }
 
     @SneakyThrows
-    public synchronized File createFileIfNotExists(String filename) {
-        Path path = Paths.get(filename);
+    public synchronized File createFileIfNotExists(String fileName) {
+        Path path = Paths.get(fileName);
         if (!Files.exists(path)) {
             Files.createDirectories(path.getParent());
             Files.createFile(path);
@@ -110,10 +111,11 @@ public class SnapshotFile {
         return path.toFile();
     }
 
+    @SuppressWarnings("SynchronizeOnNonFinalField") // TODO (nw) rewrite
     public void pushSnapshot(Snapshot snapshot) {
         synchronized (snapshots) {
             snapshots.add(snapshot);
-            TreeSet<String> rawSnapshots =
+            Set<String> rawSnapshots =
                 snapshots.stream().map(Snapshot::raw).collect(Collectors.toCollection(TreeSet::new));
             updateFile(this.fileName, rawSnapshots);
         }
@@ -121,7 +123,7 @@ public class SnapshotFile {
 
     public synchronized void pushDebugSnapshot(Snapshot snapshot) {
         debugSnapshots.add(snapshot);
-        TreeSet<String> rawDebugSnapshots =
+        Set<String> rawDebugSnapshots =
             debugSnapshots.stream().map(Snapshot::raw).collect(Collectors.toCollection(TreeSet::new));
         updateFile(getDebugFilename(), rawDebugSnapshots);
     }
@@ -132,7 +134,7 @@ public class SnapshotFile {
             byte[] myBytes = String.join(SPLIT_STRING, rawSnapshots).getBytes(StandardCharsets.UTF_8);
             fileStream.write(myBytes);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Unable to write debug file ", e);
         }
     }
 

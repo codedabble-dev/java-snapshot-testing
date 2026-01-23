@@ -16,20 +16,18 @@ import java.util.Map;
 public class Expect {
     private final SnapshotVerifier snapshotVerifier;
     private final Method testMethod;
-
+    private final Map<String, String> headers = new HashMap<>();
     private SnapshotSerializer snapshotSerializer;
     private SnapshotComparator snapshotComparator;
     private List<SnapshotReporter> snapshotReporters;
     private String scenario;
-
-    private final Map<String, String> headers = new HashMap<>();
 
     public static Expect of(SnapshotVerifier snapshotVerifier, Method method) {
         return new Expect(snapshotVerifier, method);
     }
 
     /**
-     * Make an assertion on the given input parameters against what already exists
+     * Make an assertion on the given input parameters against what already exists.
      *
      * <p>If you were previously using varargs and see an error - you can fix the error using
      * "toMatchSnapshotLegacy", however, a better approach is to use the ".scenario()" feature as
@@ -51,7 +49,7 @@ public class Expect {
         if (scenario != null) {
             snapshotContext.setScenario(scenario);
         }
-        snapshotContext.header.putAll(headers);
+        snapshotContext.getHeader().putAll(headers);
 
         snapshotContext.checkValidContext();
 
@@ -73,7 +71,7 @@ public class Expect {
     }
 
     /**
-     * Apply a custom serializer for this snapshot
+     * Apply a custom serializer for this snapshot.
      *
      * @param serializer your custom serializer
      * @return Snapshot
@@ -84,7 +82,7 @@ public class Expect {
     }
 
     /**
-     * Apply a custom serializer for this snapshot
+     * Apply a custom serializer for this snapshot.
      *
      * @param name - the {name} attribute serializer.{name} from snapshot.properties
      * @return Snapshot
@@ -95,7 +93,22 @@ public class Expect {
     }
 
     /**
-     * Apply a custom comparator for this snapshot
+     * Apply a custom serializer for this snapshot.
+     *
+     * @param serializer your custom serializer
+     * @return this
+     * @see au.com.origin.snapshots.serializers.SnapshotSerializer
+     * @see au.com.origin.snapshots.serializers.ToStringSnapshotSerializer
+     * @see au.com.origin.snapshots.serializers.Base64SnapshotSerializer
+     */
+    @SneakyThrows
+    public Expect serializer(Class<? extends SnapshotSerializer> serializer) {
+        this.snapshotSerializer = serializer.getConstructor().newInstance();
+        return this;
+    }
+
+    /**
+     * Apply a custom comparator for this snapshot.
      *
      * @param comparator your custom comparator
      * @return Snapshot
@@ -106,7 +119,7 @@ public class Expect {
     }
 
     /**
-     * Apply a custom comparator for this snapshot
+     * Apply a custom comparator for this snapshot.
      *
      * @param name the {name} attribute comparator.{name} from snapshot.properties
      * @return Snapshot
@@ -118,7 +131,7 @@ public class Expect {
 
     /**
      * Apply a list of custom reporters for this snapshot This will replace the default reporters
-     * defined in the config
+     * defined in the config.
      *
      * @param reporters your custom reporters
      * @return Snapshot
@@ -130,29 +143,13 @@ public class Expect {
 
     /**
      * Apply a list of custom reporters for this snapshot This will replace the default reporters
-     * defined in the config
+     * defined in the config.
      *
      * @param name the {name} attribute reporters.{name} from snapshot.properties
      * @return Snapshot
      */
     public Expect reporters(String name) {
         this.snapshotReporters = SnapshotProperties.getInstances("reporters." + name);
-        return this;
-    }
-
-    /**
-     * Apply a custom serializer for this snapshot.
-     *
-     * @param serializer your custom serializer
-     * @return this
-     * @see au.com.origin.snapshots.serializers.SnapshotSerializer
-     * <p>Example implementations
-     * @see au.com.origin.snapshots.serializers.ToStringSnapshotSerializer
-     * @see au.com.origin.snapshots.serializers.Base64SnapshotSerializer
-     */
-    @SneakyThrows
-    public Expect serializer(Class<? extends SnapshotSerializer> serializer) {
-        this.snapshotSerializer = serializer.getConstructor().newInstance();
         return this;
     }
 

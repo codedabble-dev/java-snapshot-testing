@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * <p>Note that collections will be ordered which mar or may not be desirable given your use case.
  */
+@SuppressWarnings("deprecation") // TODO (nw) rewrite
 public class DeterministicJacksonSnapshotSerializer extends JacksonSnapshotSerializer {
     @Override
     public void configure(ObjectMapper objectMapper) {

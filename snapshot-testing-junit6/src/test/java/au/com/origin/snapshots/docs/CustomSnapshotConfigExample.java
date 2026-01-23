@@ -11,8 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @UseSnapshotConfig(LowercaseToStringSnapshotConfig.class)
 public class CustomSnapshotConfigExample {
 
-  @Test
-  public void myTest(Expect expect) {
-    expect.toMatchSnapshot("hello world");
-  }
+    @Test
+    public void myTest(Expect expect) {
+        expect.toMatchSnapshot("hello world");
+    }
 }

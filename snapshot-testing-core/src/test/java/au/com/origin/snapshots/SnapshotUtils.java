@@ -1,6 +1,8 @@
 package au.com.origin.snapshots;
 
 import au.com.origin.snapshots.exceptions.SnapshotMatchException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.mockito.ArgumentCaptor;
 
@@ -11,13 +13,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SnapshotUtils {
 
-    public static <T> HashMap<String, List<LinkedHashMap<String, Object>>> extractArgs(
+    public static <T> Map<String, List<Map<String, Object>>> extractArgs(
         T object, String methodName, SnapshotCaptor... snapshotCaptors) {
         List<ArgumentCaptor> captors = new ArrayList<>();
         Class[] classes = new Class[snapshotCaptors.length];
@@ -32,7 +36,7 @@ public class SnapshotUtils {
         return process(object, methodName, captors, classes, snapshotCaptors);
     }
 
-    public static <T> HashMap<String, List<LinkedHashMap<String, Object>>> extractArgs(
+    public static <T> Map<String, List<Map<String, Object>>> extractArgs(
         T object, String methodName, Class<?>... classes) {
         List<ArgumentCaptor> captors = new ArrayList<>();
 
@@ -43,13 +47,13 @@ public class SnapshotUtils {
         return process(object, methodName, captors, classes, null);
     }
 
-    private static <T> HashMap<String, List<LinkedHashMap<String, Object>>> process(
+    private static <T> Map<String, List<Map<String, Object>>> process(
         T object,
         String methodName,
         List<ArgumentCaptor> captors,
         Class[] classes,
         SnapshotCaptor[] snapshotCaptors) {
-        HashMap<String, List<LinkedHashMap<String, Object>>> result = new HashMap<>();
+        Map<String, List<Map<String, Object>>> result = new HashMap<>();
         try {
             Parameter[] parameters =
                 object.getClass().getDeclaredMethod(methodName, classes).getParameters();
@@ -61,7 +65,7 @@ public class SnapshotUtils {
                     verify(object, atLeastOnce()),
                     captors.stream().map(ArgumentCaptor::capture).toArray());
 
-            List<LinkedHashMap<String, Object>> extractedObjects = new ArrayList<>();
+            List<Map<String, Object>> extractedObjects = new ArrayList<>();
 
             int numberOfCall;
 
@@ -69,7 +73,7 @@ public class SnapshotUtils {
                 numberOfCall = captors.get(0).getAllValues().size();
 
                 for (int i = 0; i < numberOfCall; i++) {
-                    LinkedHashMap<String, Object> objectMap = new LinkedHashMap<>();
+                    Map<String, Object> objectMap = new LinkedHashMap<>();
 
                     int j = 0;
                     for (ArgumentCaptor captor : captors) {
@@ -99,7 +103,6 @@ public class SnapshotUtils {
                 Paths.get("src/test/java/au/com/origin/snapshots/existing-snapshots").toFile(),
                 Paths.get("src/test/java/au/com/origin/snapshots").toFile());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException("Can't move files to __snapshots__ folder");
         }
     }

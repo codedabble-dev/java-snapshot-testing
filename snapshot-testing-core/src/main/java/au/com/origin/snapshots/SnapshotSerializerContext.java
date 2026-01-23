@@ -16,19 +16,15 @@ public class SnapshotSerializerContext {
 
     @Getter
     @Setter
-    private String name;
-
+    private final String name;
     @Getter
     @Setter
-    private String scenario;
-
+    private final String scenario;
     @Getter
     @Setter
-    private SnapshotHeader header;
-
+    private final SnapshotHeader header;
     @Getter
-    private Class<?> testClass;
-
+    private final Class<?> testClass;
     @Getter
     private final Method testMethod;
 

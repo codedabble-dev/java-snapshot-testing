@@ -20,15 +20,6 @@ public class Snapshot implements Comparable<Snapshot> {
     private final SnapshotHeader header;
     private final String body;
 
-    @Override
-    public int compareTo(Snapshot other) {
-        return (name + scenario).compareTo(other.name + other.scenario);
-    }
-
-    public String getIdentifier() {
-        return scenario == null ? name : String.format("%s[%s]", name, scenario);
-    }
-
     public static Snapshot parse(String rawText) {
         String regex =
             "^(?<name>.*?)(\\[(?<scenario>[^]]*)])?=(?<header>\\{[^}]*?})?(?<snapshot>(.*)$)";
@@ -62,6 +53,15 @@ public class Snapshot implements Comparable<Snapshot> {
             .header(SnapshotHeader.fromJson(header))
             .body(snapshot)
             .build();
+    }
+
+    @Override
+    public int compareTo(Snapshot other) {
+        return (name + scenario).compareTo(other.name + other.scenario);
+    }
+
+    public String getIdentifier() {
+        return scenario == null ? name : String.format("%s[%s]", name, scenario);
     }
 
     /**

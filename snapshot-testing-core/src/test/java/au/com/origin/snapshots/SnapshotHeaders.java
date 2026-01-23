@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 @ExtendWith(MockitoExtension.class)
 public class SnapshotHeaders {
 

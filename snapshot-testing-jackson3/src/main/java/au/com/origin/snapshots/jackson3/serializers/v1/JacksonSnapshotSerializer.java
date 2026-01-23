@@ -14,14 +14,12 @@ import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.cfg.DateTimeFeature;
 import tools.jackson.databind.json.JsonMapper;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("checkstyle:all") // TODO (nw) rewrite
 public class JacksonSnapshotSerializer implements SnapshotSerializer {
-    private final JsonMapper jsonMapper = createMapper();
-
     static DefaultPrettyPrinter.Indenter lfOnlyIndenter = new DefaultIndenter("  ", "\n");
-
     private static final DefaultPrettyPrinter pp = new DefaultPrettyPrinter() {
         {
             this.indentArraysWith(lfOnlyIndenter);
@@ -38,6 +36,7 @@ public class JacksonSnapshotSerializer implements SnapshotSerializer {
             return new DefaultPrettyPrinter(this);
         }
     }.withArrayIndenter(lfOnlyIndenter);
+    private final JsonMapper jsonMapper = createMapper();
 
     private JsonMapper createMapper() {
         JsonMapper.Builder builder =
@@ -83,7 +82,7 @@ public class JacksonSnapshotSerializer implements SnapshotSerializer {
     @Override
     public Snapshot apply(Object object, SnapshotSerializerContext gen) {
         try {
-            List<?> objects = Arrays.asList(object);
+            List<?> objects = Collections.singletonList(object);
 
             String body = jsonMapper.writerWithDefaultPrettyPrinter()
                 .writeValueAsString(objects);

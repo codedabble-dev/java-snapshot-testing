@@ -48,7 +48,7 @@ class DebugSnapshotLineEndingsTest {
      * Scenario: - An existing snapshot file checked out from git will have CR LF line endings on
      * Windows OS - A newly created snapshot file will have LF line endings on any OS (see
      * MultiLineSnapshotSerializer) Expectation: - As snapshot file content is identical (except for
-     * line endings), the debug file should not be created
+     * line endings), the debug file should not be created.
      */
     @DisplayName(
         "Debug file should not be created when snapshots match the existing snapshot regardless of line endings")

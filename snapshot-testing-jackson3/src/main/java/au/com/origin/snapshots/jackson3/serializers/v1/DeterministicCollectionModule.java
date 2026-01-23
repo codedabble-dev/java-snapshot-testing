@@ -13,8 +13,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Inspired by:
- * https://www.stubbornjava.com/posts/creating-a-somewhat-deterministic-jackson-objectmapper
+ * Inspired by: https://www.stubbornjava.com/posts/creating-a-somewhat-deterministic-jackson-objectmapper.
  */
 @Slf4j
 public class DeterministicCollectionModule extends SimpleModule {
