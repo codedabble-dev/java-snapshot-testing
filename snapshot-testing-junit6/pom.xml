@@ -12,7 +12,7 @@
 
     <artifactId>snapshot-testing-junit6</artifactId>
     <name>finoid-snapshot-testing-junit6</name>
-    <!--    <description>Core library for snapshot-testing</description>-->
+    <description>JUnit5 library for snapshot-testing</description>
 
     <properties>
         <java.version>21</java.version>
@@ -20,33 +20,9 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <junit.version>6.0.2</junit.version>
-        <jackson.version>2.20.1</jackson.version>
-        <assertj.version>3.11.1</assertj.version>
-        <slf4j.simple.version>2.0.0-alpha0</slf4j.simple.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.checkerframework</groupId>
-            <artifactId>checker-qual</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.17</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.17</version>
-            <scope>test</scope>
-        </dependency>
-
-
         <dependency>
             <groupId>io.github.finoid</groupId>
             <artifactId>snapshot-testing-core</artifactId>
@@ -55,83 +31,58 @@
             <groupId>io.github.finoid</groupId>
             <artifactId>snapshot-testing-jackson3</artifactId>
         </dependency>
-
-        <!-- User supplied JUnit5 version (compileOnly -> provided) -->
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <!--            <scope>provided</scope>-->
+            <version>${junit6.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
+            <version>${junit6.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- Testing -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.simple.version}</version>
-            <scope>test</scope>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson3.version}</version>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson3.version}</version>
+            <scope>provided</scope>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.junit.jupiter</groupId>-->
-        <!--            <artifactId>junit-jupiter-params</artifactId>-->
-        <!--            <version>${junit.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.junit.jupiter</groupId>-->
-        <!--            <artifactId>junit-jupiter-api</artifactId>-->
-        <!--            <version>${junit.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.junit.jupiter</groupId>-->
-        <!--            <artifactId>junit-jupiter-engine</artifactId>-->
-        <!--            <version>${junit.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Required java-snapshot-testing peer dependencies -->
-        <!--        <dependency>-->
-        <!--            <groupId>io.github.origin-energy</groupId>-->
-        <!--            <artifactId>java-snapshot-testing-plugin-jackson</artifactId>-->
-        <!--            <version>${project.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit6.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
 </project>
