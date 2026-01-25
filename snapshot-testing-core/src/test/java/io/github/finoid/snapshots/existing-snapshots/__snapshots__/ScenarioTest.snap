@@ -1,0 +1,28 @@
+io.github.finoid.snapshots.ScenarioTest.canTakeMultipleSnapshotsUsingScenario=[
+Default Snapshot
+]
+
+
+io.github.finoid.snapshots.ScenarioTest.canTakeMultipleSnapshotsUsingScenario[additional]=[
+Additional Snapshot
+]
+
+
+io.github.finoid.snapshots.ScenarioTest.canTakeTheSameSnapshotTwice=[
+Default Snapshot
+]
+
+
+io.github.finoid.snapshots.ScenarioTest.canTakeTheSameSnapshotTwice[scenario]=[
+Scenario Snapshot
+]
+
+
+io.github.finoid.snapshots.ScenarioTest.cannotTakeDifferentSnapshotsAtDefaultLevel=[
+Default Snapshot
+]
+
+
+io.github.finoid.snapshots.ScenarioTest.cannotTakeDifferentSnapshotsAtScenarioLevel[scenario]=[
+Default Snapshot
+]

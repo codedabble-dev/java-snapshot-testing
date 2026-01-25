@@ -1,0 +1,10 @@
+io.github.finoid.snapshots.SnapshotHeaders.shouldBeAbleToSnapshotASingleCustomHeader={
+  "custom": "anything",
+  "custom2": "anything2"
+}hello world
+
+
+io.github.finoid.snapshots.SnapshotHeaders.shouldBeAbleToSnapshotMultipleCustomHeader={
+  "custom": "anything",
+  "custom2": "anything2"
+}hello world

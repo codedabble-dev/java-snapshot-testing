@@ -1,0 +1,28 @@
+hello_world=[
+Hello World
+]
+
+
+hello_world_2=[
+Hello World
+]
+
+
+io.github.finoid.snapshots.SnapshotExtensionUsedTest.shouldUseExtension=[
+Hello World
+]
+
+
+io.github.finoid.snapshots.SnapshotExtensionUsedTest.shouldUseExtensionAgain=[
+Hello World
+]
+
+
+io.github.finoid.snapshots.SnapshotExtensionUsedTest.shouldUseExtensionAgainViaInstanceVariable=[
+Hello World
+]
+
+
+io.github.finoid.snapshots.SnapshotExtensionUsedTest.shouldUseExtensionViaInstanceVariable=[
+Hello World
+]

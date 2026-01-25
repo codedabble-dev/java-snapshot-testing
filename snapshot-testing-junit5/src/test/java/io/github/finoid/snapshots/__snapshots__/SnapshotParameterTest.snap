@@ -1,0 +1,38 @@
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTest=[
+Duplicates are OK
+]
+
+
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTestViaInstanceVariable=[
+Duplicates are OK
+]
+
+
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTestViaInstanceVariable[Scenario1]=[
+Additional snapshots need to include a scenario
+]
+
+
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTestViaInstanceVariable[Scenario2]=[
+  "test input 1"
+]
+
+
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTestViaInstanceVariable[Scenario3]=[
+  "test input 2"
+]
+
+
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTest[Scenario1]=[
+Additional snapshots need to include a scenario
+]
+
+
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTest[Scenario2]=[
+  "test input 1"
+]
+
+
+io.github.finoid.snapshots.SnapshotParameterTest.shouldSupportParameterizedTest[Scenario3]=[
+  "test input 2"
+]

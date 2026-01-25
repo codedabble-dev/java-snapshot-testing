@@ -1,0 +1,116 @@
+package io.github.finoid.snapshots;
+
+import io.github.finoid.snapshots.config.BaseSnapshotConfig;
+import io.github.finoid.snapshots.config.SnapshotConfig;
+import io.github.finoid.snapshots.exceptions.SnapshotMatchException;
+import io.github.finoid.snapshots.serializers.SnapshotSerializer;
+import io.github.finoid.snapshots.serializers.ToStringSnapshotSerializer;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@ExtendWith(MockitoExtension.class)
+public class DebugSnapshotTest {
+
+    private static final SnapshotConfig DEFAULT_CONFIG =
+        new BaseSnapshotConfig() {
+            @Override
+            public SnapshotSerializer getSerializer() {
+                return new ToStringSnapshotSerializer();
+            }
+        };
+
+    private static final String DEBUG_FILE_PATH =
+        "src/test/java/io/github/finoid/snapshots/__snapshots__/DebugSnapshotTest.snap.debug";
+    private static final String SNAPSHOT_FILE_PATH =
+        "src/test/java/io/github/finoid/snapshots/__snapshots__/DebugSnapshotTest.snap";
+
+    @BeforeAll
+    static void beforeAll() {
+        SnapshotUtils.copyTestSnapshots();
+    }
+
+    @SneakyThrows
+    @BeforeEach
+    public void beforeEach() {
+        Files.deleteIfExists(Paths.get(DEBUG_FILE_PATH));
+    }
+
+    @DisplayName("Debug file should be created when snapshots don't match")
+    @Test
+    void createDebugFile(TestInfo testInfo) {
+        assertTrue(Files.exists(Paths.get(SNAPSHOT_FILE_PATH)));
+
+        SnapshotVerifier snapshotVerifier =
+            new SnapshotVerifier(DEFAULT_CONFIG, testInfo.getTestClass().get());
+        Expect expect = Expect.of(snapshotVerifier, testInfo.getTestMethod().get());
+        assertTrue(Files.notExists(Paths.get(DEBUG_FILE_PATH)));
+        assertThrows(SnapshotMatchException.class, () -> expect.toMatchSnapshot(new TestObjectBad()));
+        assertTrue(Files.exists(Paths.get(DEBUG_FILE_PATH)));
+    }
+
+    @DisplayName("Debug file should be created when snapshots match for a new snapshot")
+    @Test
+    void debugFileCreatedNewSnapshot(TestInfo testInfo) {
+        assertTrue(Files.exists(Paths.get(SNAPSHOT_FILE_PATH)));
+
+        SnapshotVerifier snapshotVerifier =
+            new SnapshotVerifier(DEFAULT_CONFIG, testInfo.getTestClass().get());
+        Expect expect = Expect.of(snapshotVerifier, testInfo.getTestMethod().get());
+        assertTrue(Files.notExists(Paths.get(DEBUG_FILE_PATH)));
+        expect.toMatchSnapshot(new TestObjectGood());
+        assertTrue(Files.exists(Paths.get(DEBUG_FILE_PATH)));
+    }
+
+    @DisplayName("Debug file should be created when snapshots match for an existing snapshot")
+    @Test
+    void debugFileCreatedExistingSnapshot(TestInfo testInfo) {
+        assertTrue(Files.exists(Paths.get(SNAPSHOT_FILE_PATH)));
+
+        SnapshotVerifier snapshotVerifier =
+            new SnapshotVerifier(DEFAULT_CONFIG, testInfo.getTestClass().get());
+        Expect expect = Expect.of(snapshotVerifier, testInfo.getTestMethod().get());
+        assertTrue(Files.notExists(Paths.get(DEBUG_FILE_PATH)));
+        expect.toMatchSnapshot(new TestObjectGood());
+        assertTrue(Files.exists(Paths.get(DEBUG_FILE_PATH)));
+    }
+
+    @SneakyThrows
+    @DisplayName("Existing debug file should not be deleted once snapshots match")
+    @Test
+    void debugFileCreatedSnapshotMatch(TestInfo testInfo) {
+        assertTrue(Files.exists(Paths.get(SNAPSHOT_FILE_PATH)));
+        Files.createFile(Paths.get(DEBUG_FILE_PATH));
+        assertTrue(Files.exists(Paths.get(DEBUG_FILE_PATH)));
+        SnapshotVerifier snapshotVerifier =
+            new SnapshotVerifier(DEFAULT_CONFIG, testInfo.getTestClass().get());
+        Expect expect = Expect.of(snapshotVerifier, testInfo.getTestMethod().get());
+        expect.toMatchSnapshot(new TestObjectGood());
+        assertTrue(Files.exists(Paths.get(DEBUG_FILE_PATH)));
+    }
+
+    private static class TestObjectBad {
+        @Override
+        public String toString() {
+            return "Bad Snapshot";
+        }
+    }
+
+    private static class TestObjectGood {
+        @Override
+        public String toString() {
+            return "Good Snapshot";
+        }
+    }
+}

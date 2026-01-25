@@ -43,7 +43,7 @@
 
     <modules>
         <module>snapshot-testing-core</module>
-        <module>snapshot-testing-jackson</module>
+        <module>snapshot-testing-jackson2</module>
         <module>snapshot-testing-jackson3</module>
         <module>snapshot-testing-junit5</module>
         <module>snapshot-testing-junit6</module>
@@ -58,7 +58,7 @@
             </dependency>
             <dependency>
                 <groupId>io.github.finoid</groupId>
-                <artifactId>snapshot-testing-jackson</artifactId>
+                <artifactId>snapshot-testing-jackson2</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

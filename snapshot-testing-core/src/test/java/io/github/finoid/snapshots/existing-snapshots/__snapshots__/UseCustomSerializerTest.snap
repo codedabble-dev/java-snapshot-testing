@@ -1,0 +1,10 @@
+io.github.finoid.snapshots.UseCustomSerializerTest.canUseSnapshotSerializerAnnotationAtClassLevel=this is a snapshot of the tostring() method
+
+
+io.github.finoid.snapshots.UseCustomSerializerTest.canUseSnapshotSerializerAnnotationAtMethodLevel=THIS IS A SNAPSHOT OF THE TOSTRING() METHOD
+
+
+io.github.finoid.snapshots.UseCustomSerializerTest.canUseSnapshotSerializerAnnotationAtMethodLevelUsingClassName=THIS IS A SNAPSHOT OF THE TOSTRING() METHOD
+
+
+io.github.finoid.snapshots.UseCustomSerializerTest.canUseSnapshotSerializerAnnotationAtMethodLevelUsingNewInstance=THIS IS A SNAPSHOT OF THE TOSTRING() METHOD

@@ -1,0 +1,12 @@
+docs.jackson.io.github.finoid.snapshots.CustomSerializerTest.test1=[
+  {
+    "somethingElse": "This should render"
+  }
+]
+
+
+io.github.finoid.snapshots.jackson.docs.CustomSerializerTest.test1=[
+  {
+    "somethingElse": "This should render"
+  }
+]

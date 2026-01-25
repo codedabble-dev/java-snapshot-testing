@@ -1,0 +1,9 @@
+io.github.finoid.snapshots.docs.JUnit5ResolutionHierarchyExample.aliasMethodTest=[
+  { }
+]
+
+
+io.github.finoid.snapshots.docs.JUnit5ResolutionHierarchyExample.customSerializerTest=THIS IS A SNAPSHOT OF THE TOSTRING() METHOD
+
+
+io.github.finoid.snapshots.docs.JUnit5ResolutionHierarchyExample.lowercaseTest=this is a snapshot of the tostring() method
