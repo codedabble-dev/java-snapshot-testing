@@ -1,0 +1,62 @@
+name: Publish to Maven Central
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: Publish Maven package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          server-id: central
+          server-username: OSSRH_USERNAME
+          server-password: OSSRH_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+
+      # Set reproducible build timestamp
+      - name: Set build timestamp
+        run: |
+          # Use the commit timestamp for reproducibility
+          COMMIT_TIMESTAMP=$(git log -1 --format=%ct)
+          BUILD_TIMESTAMP=$(date -u -d @${COMMIT_TIMESTAMP} +"%Y-%m-%dT%H:%M:%SZ")
+          echo "BUILD_TIMESTAMP=$BUILD_TIMESTAMP" >> $GITHUB_ENV
+          echo "Setting build timestamp to: $BUILD_TIMESTAMP"
+
+      - name: Build and Test
+        run: mvn clean verify --batch-mode -Dproject.build.outputTimestamp="${BUILD_TIMESTAMP}"
+
+      - name: Determine version from tag
+        id: version
+        run: |
+          RAW_TAG="${GITHUB_REF##*/}"
+          VERSION="${RAW_TAG#v}"
+
+          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+            VERSION="${VERSION}-SNAPSHOT"
+          fi
+
+          echo "Resolved version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Set Maven version
+        run: mvn versions:set -DnewVersion=${VERSION} -DgenerateBackupPoms=false
+
+      - name: Publish to Maven Central
+        run: mvn deploy --batch-mode -Dproject.build.outputTimestamp="${BUILD_TIMESTAMP}"
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
