@@ -1,41 +1,79 @@
+import org.gradle.api.tasks.compile.GroovyCompile
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.tasks.javadoc.Javadoc
+import org.gradle.api.tasks.testing.Test
+
 plugins {
     id 'net.researchgate.release' version '2.6.0' apply false
-    id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
+    id 'com.gradleup.shadow' version '9.3.2' apply false
     id 'io.codearte.nexus-staging' version '0.22.0'
-    id "com.diffplug.spotless" version "6.11.0" apply false
+    id 'com.diffplug.spotless' version '8.4.0' apply false
+}
+
+ext {
+    junit5Version = '5.10.2'
+    lombokVersion = '1.18.20'
+    slf4jVersion = '2.0.0-alpha0'
+    assertjVersion = '3.11.1'
 }
 
 subprojects { subproject ->
-    // FIXME this plugin is currently not working for multi-module projects even when defined at the top level only
-    // Will need to release and TAG manually for now
     subproject.apply plugin: 'net.researchgate.release'
     subproject.apply plugin: 'java-library'
-    subproject.apply plugin: 'com.github.johnrengelman.shadow'
+    subproject.apply plugin: 'com.gradleup.shadow'
     subproject.apply plugin: 'maven-publish'
 
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 
     repositories {
         mavenCentral()
     }
 
+    tasks.withType(JavaCompile).configureEach {
+        javaCompiler = javaToolchains.compilerFor {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    tasks.withType(Javadoc).configureEach {
+        javadocTool = javaToolchains.javadocToolFor {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    tasks.withType(Test).configureEach {
+        javaLauncher = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    tasks.withType(GroovyCompile).configureEach {
+        javaLauncher = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
     shadowJar {
-        classifier = ''
+        archiveClassifier = ''
         relocate 'org.assertj', 'shadow.org.assertj'
         relocate 'org.opentest4j', 'shadow.org.opentest4j'
-        exclude "module-info.class"
+        exclude 'module-info.class'
+    }
+
+    jar {
+        archiveClassifier = 'thin'
     }
 
     dependencies {
-        // Lombok
-        compileOnly 'org.projectlombok:lombok:1.18.20'
-        annotationProcessor 'org.projectlombok:lombok:1.18.20'
-        testCompileOnly 'org.projectlombok:lombok:1.18.20'
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+        compileOnly "org.projectlombok:lombok:${project.lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${project.lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${project.lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${project.lombokVersion}"
 
-        // Logging implementation
-        compileOnly 'org.slf4j:slf4j-api:2.0.0-alpha0'
+        compileOnly "org.slf4j:slf4j-api:${project.slf4jVersion}"
     }
 
     // Add verbose logging for Github Actions

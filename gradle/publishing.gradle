@@ -8,81 +8,82 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
 apply plugin: 'net.researchgate.release'
 
-// Sign for maven central deployment
+publishing {
+    publications.withType(MavenPublication).configureEach {
+        artifact javadocJar
+        artifact sourcesJar
+
+        pom {
+            name = 'java-snapshot-testing'
+            description = 'Snapshot Testing for Java'
+            url = 'https://github.com/origin-energy/java-snapshot-testing'
+
+            scm {
+                connection = 'scm:git:https://github.com/origin-energy/java-snapshot-testing'
+                url = 'https://github.com/origin-energy/java-snapshot-testing'
+            }
+
+            licenses {
+                license {
+                    name = 'MIT License'
+                    url = 'http://www.opensource.org/licenses/mit-license.php'
+                }
+            }
+
+            developers {
+                developer {
+                    id = 'jack.matthews'
+                    name = 'Jack Matthews'
+                    email = 'jack.matthews@origin.com.au'
+                }
+            }
+
+            withXml {
+                def pomNode = asNode()
+                pomNode.children().removeAll { child -> child instanceof Node && child.name() == 'dependencies' }
+            }
+        }
+    }
+}
+
 if (project.hasProperty("sign")) {
     apply plugin: 'signing'
     signing {
         def signingKey = findProperty("signingKey")
         def signingPassword = findProperty("signingPassword")
         useInMemoryPgpKeys(signingKey, signingPassword)
-        sign configurations.archives
     }
-
-    // previously the plugin was using the `build` version which did not include the shadowed dependencies
-    signArchives.dependsOn 'shadowJar'
 }
 
-// Maven Central Publishing
+afterEvaluate {
+    if (project.hasProperty("sign")) {
+        signing {
+            sign publishing.publications
+        }
+    }
+}
+
 if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
-    apply plugin: 'maven'
+    publishing {
+        repositories {
+            maven {
+                name = 'sonatype'
+                url = uri(project.version.toString().endsWith('-SNAPSHOT')
+                    ? 'https://oss.sonatype.org/content/repositories/snapshots/'
+                    : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+                credentials {
+                    username = project.property("ossrhUsername")
+                    password = project.property("ossrhPassword")
+                }
+            }
+        }
+    }
 
     nexusStaging {
         username project.property("ossrhUsername")
         password project.property("ossrhPassword")
         packageGroup 'io.github.origin-energy'
     }
-
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                pom.project {
-                    name 'java-snapsho-testing'
-                    packaging 'jar'
-                    description 'Snapshot Testing for Java'
-                    url 'https://github.com/origin-energy/java-snapshot-testing'
-                    scm {
-                        connection 'scm:git:https://github.com/origin-energy/java-snapshot-testing'
-                        url 'https://github.com/origin-energy/java-snapshot-testing'
-                    }
-
-                    licenses {
-                        license {
-                            name 'MIT License'
-                            url 'http://www.opensource.org/licenses/mit-license.php'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'jack.matthews'
-                            name 'Jack Matthews'
-                            email 'jack.matthews@origin.com.au'
-                        }
-                    }
-                }
-
-                // We clear out all the dependencies because we have shadowed them inside the jar
-                pom.whenConfigured {
-                    p -> p.dependencies = []
-                }
-            }
-        }
-    }
 }
-

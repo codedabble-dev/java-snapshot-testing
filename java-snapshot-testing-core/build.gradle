@@ -1,5 +1,6 @@
 apply from: "../gradle/publishing.gradle"
 apply from: "../gradle/spotless.gradle"
+apply from: "../gradle/junit5.gradle"
 
 dependencies {
 
@@ -12,13 +13,8 @@ dependencies {
     testImplementation 'org.slf4j:slf4j-simple:2.0.0-alpha0'
     testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
     testImplementation 'org.mockito:mockito-core:2.23.4'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.2'
     testImplementation group: 'commons-io', name: 'commons-io', version: '2.6'
 }
-
-test { useJUnitPlatform() }
 
 publishing {
     publications {

@@ -47,9 +47,7 @@ Gradle release plugin is not currently working so this is a manual process at th
 
 ```
 gpg --import private.key
-cd ~/.gnupg
 gpg -k
-gpg --export-secret-key YOUR_KEY_ID > ~/.gnupg/secring.gpg
 ```
 
 ## Preparing
@@ -62,13 +60,12 @@ gpg --export-secret-key YOUR_KEY_ID > ~/.gnupg/secring.gpg
 ```
 export SONAR_USERNAME=?
 export SONAR_PASSWORD=?
-export GPG_KEY_ID=?
-export GPG_KEY_PASSPHRASE=?
-export PATH_TO_SECRING_GPG=~/.gnupg/secring.gpg
+export ORG_GRADLE_PROJECT_signingKey="$(cat private.key)"
+export ORG_GRADLE_PROJECT_signingPassword=?
 
 # I found shadowed classes are not included if you don't separate the gradle operations
 ./gradlew clean shadowJar
-./gradlew signArchives uploadArchives -PossrhUsername=${SONAR_USERNAME} -PossrhPassword=${SONAR_PASSWORD} -Psigning.keyId=${GPG_KEY_ID} -Psigning.password=${GPG_KEY_PASSPHRASE} -Psigning.secretKeyRingFile=${PATH_TO_SECRING_GPG}
+./gradlew publish -PossrhUsername=${SONAR_USERNAME} -PossrhPassword=${SONAR_PASSWORD} -Psign=true
 ```
 
 ## Releasing [Full Tutorial](https://central.sonatype.org/pages/ossrh-guide.html)

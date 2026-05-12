@@ -1,0 +1,54 @@
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.tasks.javadoc.Javadoc
+import org.gradle.api.tasks.testing.Test
+
+apply from: "../gradle/publishing.gradle"
+apply from: "../gradle/spotless.gradle"
+apply from: "../gradle/junit5.gradle"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    javaCompiler = javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(Javadoc).configureEach {
+    javadocTool = javaToolchains.javadocToolFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(Test).configureEach {
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+dependencies {
+    compileOnly project(':java-snapshot-testing-core')
+
+    compileOnly 'tools.jackson.core:jackson-core:3.1.0'
+    compileOnly 'tools.jackson.core:jackson-databind:3.1.0'
+
+    testImplementation project(':java-snapshot-testing-core')
+    testImplementation "org.slf4j:slf4j-simple:${project.slf4jVersion}"
+    testImplementation "org.assertj:assertj-core:${project.assertjVersion}"
+
+    testImplementation 'tools.jackson.core:jackson-core:3.1.0'
+    testImplementation 'tools.jackson.core:jackson-databind:3.1.0'
+}
+
+publishing {
+    publications {
+        myPublication(MavenPublication) {
+            artifact shadowJar
+            groupId 'io.github.origin-energy'
+            artifactId 'java-snapshot-testing-plugin-jackson3'
+        }
+    }
+}

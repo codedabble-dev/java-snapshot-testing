@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -155,13 +156,17 @@ public class SnapshotFile {
 
   @SneakyThrows
   private boolean snapshotsAreTheSame() {
-    Path path = Paths.get(this.getDebugFilename());
-    if (Files.exists(path)) {
+    Path debugPath = Paths.get(this.getDebugFilename());
+    if (Files.exists(debugPath)) {
       List<String> snapshotFileContent =
           Files.readAllLines(Paths.get(this.fileName), StandardCharsets.UTF_8);
-      List<String> debugSnapshotFileContent =
-          Files.readAllLines(Paths.get(this.getDebugFilename()), StandardCharsets.UTF_8);
-      return Objects.equals(snapshotFileContent, debugSnapshotFileContent);
+      try {
+        List<String> debugSnapshotFileContent =
+            Files.readAllLines(debugPath, StandardCharsets.UTF_8);
+        return Objects.equals(snapshotFileContent, debugSnapshotFileContent);
+      } catch (NoSuchFileException e) {
+        return false;
+      }
     }
 
     return false;

@@ -73,8 +73,10 @@ class SnapshotCaptor {
   }
 
   private Object constructCopy(Class<?> argumentClass)
-      throws InstantiationException, IllegalAccessException,
-          java.lang.reflect.InvocationTargetException, NoSuchMethodException {
+      throws InstantiationException,
+          IllegalAccessException,
+          java.lang.reflect.InvocationTargetException,
+          NoSuchMethodException {
 
     try {
       return argumentClass.getDeclaredConstructor().newInstance();

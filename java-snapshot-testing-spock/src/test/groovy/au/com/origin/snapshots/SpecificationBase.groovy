@@ -6,5 +6,5 @@ import spock.lang.Specification
 
 @RunWith(Sputnik.class)
 class SpecificationBase extends Specification {
-    Expect expect;
+	Expect expect;
 }

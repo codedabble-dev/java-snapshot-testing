@@ -9,26 +9,26 @@ import spock.lang.Specification
 @EnableSnapshots
 class SpockExample extends Specification {
 
-    // Option 1: inject Expect as an instance variable
-    private Expect expect
+	// Option 1: inject Expect as an instance variable
+	private Expect expect
 
-    // With spock tests you should always use @SnapshotName - otherwise they become coupled to test order
-    @SnapshotName("should_use_extension")
-    def "Should use extension"() {
-        when:
-        expect.toMatchSnapshot("Hello World")
+	// With spock tests you should always use @SnapshotName - otherwise they become coupled to test order
+	@SnapshotName("should_use_extension")
+	def "Should use extension"() {
+		when:
+		expect.toMatchSnapshot("Hello World")
 
-        then:
-        true
-    }
+		then:
+		true
+	}
 
-    @SnapshotName("should_use_extension_as_method_argument")
-    // Option 2: inject Expect into the method signature
-    def "Should use extension as method argument"(Expect expect) {
-        when:
-        expect.toMatchSnapshot("Hello World")
+	@SnapshotName("should_use_extension_as_method_argument")
+	// Option 2: inject Expect into the method signature
+	def "Should use extension as method argument"(Expect expect) {
+		when:
+		expect.toMatchSnapshot("Hello World")
 
-        then:
-        true
-    }
+		then:
+		true
+	}
 }
