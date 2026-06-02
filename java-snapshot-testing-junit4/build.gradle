@@ -20,7 +20,7 @@ publishing {
     publications {
         myPublication(MavenPublication) {
             artifact shadowJar
-            groupId 'io.github.origin-energy'
+            groupId project.group.toString()
             artifactId 'java-snapshot-testing-junit4'
         }
     }
