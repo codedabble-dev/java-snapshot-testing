@@ -1,10 +1,10 @@
 [![Build Status](https://github.com/origin-energy/java-snapshot-testing/workflows/build/badge.svg)](https://github.com/origin-energy/java-snapshot-testing/actions)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.origin-energy/java-snapshot-testing-core/badge.svg)](https://search.maven.org/artifact/io.github.origin-energy/java-snapshot-testing-core/3.2.7/jar)
+[![JitPack](https://jitpack.io/v/origin-energy/java-snapshot-testing.svg)](https://jitpack.io/#origin-energy/java-snapshot-testing)
 
 # Java Snapshot Testing
 - Inspired by [facebook's Jest framework](https://facebook.github.io/jest/docs/en/snapshot-testing.html)
 
-🎉 4.0.0 is out
+🎉 4.+ is out
 
 ## Upgrading
 - Upgrade guide from 3.X to 4.X [here](https://github.com/origin-energy/java-snapshot-testing/discussions/94)
@@ -25,19 +25,23 @@ Then java-snapshot-testing might just be what you are looking for!
 1. Add test dependencies
 
 ```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 // In this case we are using the JUnit5 testing framework
-testImplementation 'io.github.origin-energy:java-snapshot-testing-junit5:4.+'
+testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-junit5:4.+'
 
 // slf4j logging implementation if you don't already have one
 testImplementation("org.slf4j:slf4j-simple:2.0.0-alpha0")
 
 // Optional: Many will want to serialize into JSON.  In this case you should also add the Jackson plugin
-testImplementation 'io.github.origin-energy:java-snapshot-testing-plugin-jackson3:4.+'
+testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson3:4.+'
 testImplementation 'tools.jackson.core:jackson-core:3.1.0'
 testImplementation 'tools.jackson.core:jackson-databind:3.1.0'
 
 // For Jackson 2 use the dedicated plugin and serializer classes instead
-testImplementation 'io.github.origin-energy:java-snapshot-testing-plugin-jackson:4.+'
+testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson:4.+'
 testImplementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
 testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
 
@@ -142,34 +146,45 @@ data.
 - Does not give great insight to why the snapshot failed
 - Can be difficult to troll though large snapshot changes where you might only be interested in a small set of fields
 
-## Installation [Maven](https://search.maven.org/search?q=java-snapshot-testing)
+## Installation [JitPack](https://jitpack.io/#origin-energy/java-snapshot-testing)
 
-These docs are for the latest `-SNAPSHOT` version published to maven central. Select the tag `X.X.X` matching your maven
-dependency to get correct documentation for your version.
+Add JitPack to your build repositories:
+
+```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+```
+
+Then add the module for your test framework. The `4.+` version uses the latest available 4.x release.
 
 Only if you want to integrate with an unsupported framework. [Show me how!](#using-an-unsupported-framework)
 
-- [Core](https://search.maven.org/search?q=a:java-snapshot-testing-core)
+```groovy
+testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-core:4.+'
+```
 
 We currently support:
 
-- [JUnit4](https://search.maven.org/search?q=a:java-snapshot-testing-junit4)
-- [JUnit5](https://search.maven.org/search?q=a:java-snapshot-testing-junit5)
-- [Spock](https://search.maven.org/search?q=a:java-snapshot-testing-spock)
+```groovy
+testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-junit4:4.+'
+testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-junit5:4.+'
+testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-spock:4.+'
+```
 
 Plugins
 
-- [Jackson for JSON serialization](https://search.maven.org/search?q=a:java-snapshot-testing-plugin-jackson)
-- [Jackson 3 for JSON serialization](https://search.maven.org/search?q=a:java-snapshot-testing-plugin-jackson3)
+- Jackson for JSON serialization
+- Jackson 3 for JSON serialization
     - You need jackson on your classpath (Gradle example)
       ```groovy
          // Jackson 2 plugin
-         testImplementation 'io.github.origin-energy:java-snapshot-testing-plugin-jackson:4.+'
+         testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson:4.+'
          testImplementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
          testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
 
          // Jackson 3 plugin
-         testImplementation 'io.github.origin-energy:java-snapshot-testing-plugin-jackson3:4.+'
+         testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson3:4.+'
          testImplementation 'tools.jackson.core:jackson-core:3.1.0'
          testImplementation 'tools.jackson.core:jackson-databind:3.1.0'
       ```
