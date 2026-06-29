@@ -2,6 +2,10 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.codedabble-dev/java-snapshot-testing-core.svg)](https://central.sonatype.com/artifact/io.github.codedabble-dev/java-snapshot-testing-core)
 [![JitPack](https://jitpack.io/v/codedabble-dev/java-snapshot-testing.svg)](https://jitpack.io/#codedabble-dev/java-snapshot-testing)
 
+> [!IMPORTANT]
+> The Maven Central namespace has changed from [`io.github.origin-energy`](https://central.sonatype.com/namespace/io.github.origin-energy) to [`io.github.codedabble-dev`](https://central.sonatype.com/namespace/io.github.codedabble-dev).
+> Update your build dependencies to use the new `io.github.codedabble-dev` group ID.
+
 # Java Snapshot Testing
 - Inspired by [facebook's Jest framework](https://facebook.github.io/jest/docs/en/snapshot-testing.html)
 
