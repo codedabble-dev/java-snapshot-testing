@@ -1,0 +1,41 @@
+jreleaser:
+  project:
+    name: java-snapshot-testing
+    description: Snapshot Testing for Java
+    longDescription: A Java library for snapshot testing with support for JUnit 4, JUnit 5, and Spock
+    website: https://github.com/codedabble-dev/java-snapshot-testing
+    documentationUrl: https://github.com/codedabble-dev/java-snapshot-testing/blob/main/README.md
+    repositoryUrl: https://github.com/codedabble-dev/java-snapshot-testing
+    bugTrackerUrl: https://github.com/codedabble-dev/java-snapshot-testing/issues
+    authors:
+      - Jack Matthews
+    license: MIT
+    inceptionYear: 2021
+    tags:
+      - snapshot-testing
+      - testing
+      - java
+    java:
+      version: 1.8
+      groupId: io.github.codedabble-dev
+      artifactId: java-snapshot-testing
+
+  release:
+    github:
+      enabled: false
+
+  signing:
+    active: RELEASE
+    armored: true
+    verify: true
+
+  deploy:
+    maven:
+      mavenCentral:
+        active: RELEASE
+        auth: BASIC
+        url: https://central.sonatype.com/api/v1/publisher
+        closeRepository: true
+        releaseRepository: true
+        stagingRepositories:
+          - build/repos/release

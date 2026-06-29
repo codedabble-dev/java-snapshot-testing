@@ -34,53 +34,43 @@ Ensure you add `mavenLocal()` to your consuming project and the dependency veris
 folder
 
 # Uploading to maven central
-see `.github/workflows/release.yml`
 
-# Uploading to maven central (manually)
+The project now uses [JReleaser](https://jreleaser.org/) to automate releases to Maven Central.
 
-Gradle release plugin is not currently working so this is a manual process at the moment.
+See [JRELEASER_SETUP.md](JRELEASER_SETUP.md) for complete setup and release instructions.
 
-# Setup GPG on your machine
+### Quick Release Steps
 
-1. copy the GPG Private key into a file `private.key`
-1. run
+1. Ensure you have Maven Central Portal API credentials:
+   - `JRELEASER_MAVENCENTRAL_USERNAME` 
+   - `JRELEASER_MAVENCENTRAL_PASSWORD`
 
-```
-gpg --import private.key
-gpg -k
-```
+2. Setup GPG signing (see JRELEASER_SETUP.md)
 
-## Preparing
+3. Update version in `gradle.properties` (remove `-SNAPSHOT`)
 
-1. Create a tag `X.X.X`
-1. Update `gradle.properties` and remove `-SNAPSHOT` from the version number
-1. Check this file into version control and push the branch to the remote
-1. run
+4. Run full release:
+   ```bash
+   ./gradlew jreleaserFullRelease
+   ```
 
-```
-export SONAR_USERNAME=?
-export SONAR_PASSWORD=?
-export ORG_GRADLE_PROJECT_signingKey="$(cat private.key)"
-export ORG_GRADLE_PROJECT_signingPassword=?
-
-# I found shadowed classes are not included if you don't separate the gradle operations
-./gradlew clean shadowJar
-./gradlew publish -PossrhUsername=${SONAR_USERNAME} -PossrhPassword=${SONAR_PASSWORD} -Psign=true
+Or use step-by-step approach:
+```bash
+./gradlew clean build publishToMavenLocal -Psign
+./gradlew jreleaserPublish
 ```
 
-## Releasing [Full Tutorial](https://central.sonatype.org/pages/ossrh-guide.html)
+JReleaser will automatically:
+- Sign all artifacts with GPG
+- Publish to Maven Central via Portal API
+- Close and release the staging repository
+- Create a GitHub release
 
-1. Login to SONAR (https://oss.sonatype.org)
-1. Click 'Staging Repositories' and locate the 'iogithubcodedabble-dev' bundle
-1. Review artifacts are correct in the 'Content' tab
-1. Press the 'Close' and give a reason such as "Jack Matthews - Confirmed artifacts are OK"
-1. Wait for about 1 min and press the 'Refresh button', if all sanity checks have passed the 'Release' button will be
-   visible
-1. Press the 'Release' button and give a reason for releasing
-1. Objects should be available in about 10 min (Longer for search.maven.org)
+### Previous Manual Process (No Longer Needed)
 
-## Cleanup
+The old process involved:
+1. Manual staging repository management via Sonatype UI
+2. Direct OSSRH publishing
+3. Manual close/release steps
 
-1. Checkout master branch
-1. Increment version number in `gradle.properties`
-1. Create pull request for merge
+All of this is now automated by JReleaser.

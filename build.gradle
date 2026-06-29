@@ -8,7 +8,10 @@ plugins {
     id 'com.gradleup.shadow' version '9.3.2' apply false
     id 'io.codearte.nexus-staging' version '0.22.0'
     id 'com.diffplug.spotless' version '8.4.0' apply false
+    id 'org.jreleaser' version '1.13.1' apply false
 }
+
+apply plugin: 'org.jreleaser'
 
 ext {
     junit5Version = '5.10.2'
