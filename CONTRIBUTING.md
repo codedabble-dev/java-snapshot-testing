@@ -14,7 +14,7 @@ We welcome contributions to this project by both internal and external parties
 1. Ensure Github Actions build passes
 1. Await reviews
 1. Once merged into `master` a `SNAPSHOT` build will be available for consumption
-   immediately [here](https://oss.sonatype.org/content/repositories/snapshots/io/github/origin-energy/). Note that
+   immediately [here](https://oss.sonatype.org/content/repositories/snapshots/io/github/jackmatt2/). Note that
    snapshots change regularly and cannot be relied upon.
 1. Hard Releases will be made once enough features have been added.
 
@@ -71,7 +71,7 @@ export ORG_GRADLE_PROJECT_signingPassword=?
 ## Releasing [Full Tutorial](https://central.sonatype.org/pages/ossrh-guide.html)
 
 1. Login to SONAR (https://oss.sonatype.org)
-1. Click 'Staging Repositories' and locate the 'iogithuborigin-energy' bundle
+1. Click 'Staging Repositories' and locate the 'iogithubjackmatt2' bundle
 1. Review artifacts are correct in the 'Content' tab
 1. Press the 'Close' and give a reason such as "Jack Matthews - Confirmed artifacts are OK"
 1. Wait for about 1 min and press the 'Refresh button', if all sanity checks have passed the 'Release' button will be

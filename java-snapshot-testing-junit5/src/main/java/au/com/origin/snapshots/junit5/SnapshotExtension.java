@@ -75,7 +75,7 @@ public class SnapshotExtension
           "FAILED: (Java Snapshot Testing) Unable to get JUnit5 ClassTestDescriptor or ClassBasedTestDescriptor!\n"
               + "Ensure you are using Junit5 >= 5.3.2\n"
               + "This may be due to JUnit5 changing their private api as we use reflection to access it\n"
-              + "Log a support ticket https://github.com/origin-energy/java-snapshot-testing/issues and supply your JUnit5 version\n"
+              + "Log a support ticket https://github.com/jackmatt2/java-snapshot-testing/issues and supply your JUnit5 version\n"
               + "Setting failOnOrphans=true as this is the safest option."
               + "This means that running a test alone (say from the IDE) will fail the snapshot, you need to run the entire class.",
           e);

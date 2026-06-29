@@ -18,11 +18,11 @@ publishing {
         pom {
             name = 'java-snapshot-testing'
             description = 'Snapshot Testing for Java'
-            url = 'https://github.com/origin-energy/java-snapshot-testing'
+            url = 'https://github.com/jackmatt2/java-snapshot-testing'
 
             scm {
-                connection = 'scm:git:https://github.com/origin-energy/java-snapshot-testing'
-                url = 'https://github.com/origin-energy/java-snapshot-testing'
+                connection = 'scm:git:https://github.com/jackmatt2/java-snapshot-testing'
+                url = 'https://github.com/jackmatt2/java-snapshot-testing'
             }
 
             licenses {
@@ -36,7 +36,7 @@ publishing {
                 developer {
                     id = 'jack.matthews'
                     name = 'Jack Matthews'
-                    email = 'jack.matthews@origin.com.au'
+                    email = 'dev@codedabble.com'
                 }
             }
 
@@ -84,6 +84,6 @@ if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")
     nexusStaging {
         username project.property("ossrhUsername")
         password project.property("ossrhPassword")
-        packageGroup 'io.github.origin-energy'
+        packageGroup 'io.github.codedabble-dev'
     }
 }

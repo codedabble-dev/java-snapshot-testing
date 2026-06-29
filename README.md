@@ -1,5 +1,5 @@
-[![Build Status](https://github.com/origin-energy/java-snapshot-testing/workflows/build/badge.svg)](https://github.com/origin-energy/java-snapshot-testing/actions)
-[![JitPack](https://jitpack.io/v/origin-energy/java-snapshot-testing.svg)](https://jitpack.io/#origin-energy/java-snapshot-testing)
+[![Build Status](https://github.com/jackmatt2/java-snapshot-testing/workflows/build/badge.svg)](https://github.com/jackmatt2/java-snapshot-testing/actions)
+[![JitPack](https://jitpack.io/v/jackmatt2/java-snapshot-testing.svg)](https://jitpack.io/#jackmatt2/java-snapshot-testing)
 
 # Java Snapshot Testing
 - Inspired by [facebook's Jest framework](https://facebook.github.io/jest/docs/en/snapshot-testing.html)
@@ -7,9 +7,9 @@
 🎉 4.+ is out
 
 ## Upgrading
-- Upgrade guide from 3.X to 4.X [here](https://github.com/origin-energy/java-snapshot-testing/discussions/94)
-- Upgrade guide from 2.X to 3.X [here](https://github.com/origin-energy/java-snapshot-testing/discussions/73)
-- Upgrade guide from 2.X-BETA to 2.X [here](https://github.com/origin-energy/java-snapshot-testing/discussions/58)
+- Upgrade guide from 3.X to 4.X [here](https://github.com/jackmatt2/java-snapshot-testing/discussions/94)
+- Upgrade guide from 2.X to 3.X [here](https://github.com/jackmatt2/java-snapshot-testing/discussions/73)
+- Upgrade guide from 2.X-BETA to 2.X [here](https://github.com/jackmatt2/java-snapshot-testing/discussions/58)
 
 ## The testing framework loved by ~~lazy~~ __productive__ devs
 
@@ -30,18 +30,18 @@ repositories {
 }
 
 // In this case we are using the JUnit5 testing framework
-testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-junit5:4.+'
+testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-junit5:4.+'
 
 // slf4j logging implementation if you don't already have one
 testImplementation("org.slf4j:slf4j-simple:2.0.0-alpha0")
 
 // Optional: Many will want to serialize into JSON.  In this case you should also add the Jackson plugin
-testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson3:4.+'
+testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-plugin-jackson3:4.+'
 testImplementation 'tools.jackson.core:jackson-core:3.1.0'
 testImplementation 'tools.jackson.core:jackson-databind:3.1.0'
 
 // For Jackson 2 use the dedicated plugin and serializer classes instead
-testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson:4.+'
+testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-plugin-jackson:4.+'
 testImplementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
 testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
 
@@ -146,7 +146,7 @@ data.
 - Does not give great insight to why the snapshot failed
 - Can be difficult to troll though large snapshot changes where you might only be interested in a small set of fields
 
-## Installation [JitPack](https://jitpack.io/#origin-energy/java-snapshot-testing)
+## Installation [JitPack](https://jitpack.io/#jackmatt2/java-snapshot-testing)
 
 Add JitPack to your build repositories:
 
@@ -161,15 +161,15 @@ Then add the module for your test framework. The `4.+` version uses the latest a
 Only if you want to integrate with an unsupported framework. [Show me how!](#using-an-unsupported-framework)
 
 ```groovy
-testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-core:4.+'
+testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-core:4.+'
 ```
 
 We currently support:
 
 ```groovy
-testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-junit4:4.+'
-testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-junit5:4.+'
-testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-spock:4.+'
+testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-junit4:4.+'
+testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-junit5:4.+'
+testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-spock:4.+'
 ```
 
 Plugins
@@ -179,12 +179,12 @@ Plugins
     - You need jackson on your classpath (Gradle example)
       ```groovy
          // Jackson 2 plugin
-         testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson:4.+'
+         testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-plugin-jackson:4.+'
          testImplementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
          testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
 
          // Jackson 3 plugin
-         testImplementation 'com.github.origin-energy.java-snapshot-testing:java-snapshot-testing-plugin-jackson3:4.+'
+         testImplementation 'io.github.codedabble-dev.java-snapshot-testing:java-snapshot-testing-plugin-jackson3:4.+'
          testImplementation 'tools.jackson.core:jackson-core:3.1.0'
          testImplementation 'tools.jackson.core:jackson-databind:3.1.0'
       ```
@@ -339,7 +339,7 @@ public class JUnit4RulesExample {
 }
 ```
 
-See the [ParameterizedTest](https://github.com/origin-energy/java-snapshot-testing/blob/master/java-snapshot-testing-junit4/src/test/java/au/com/origin/snapshots/ParameterizedTest.java) for an example implementation
+See the [ParameterizedTest](https://github.com/jackmatt2/java-snapshot-testing/blob/master/java-snapshot-testing-junit4/src/test/java/au/com/origin/snapshots/ParameterizedTest.java) for an example implementation
 
 ## [Spock](http://spockframework.org/)
 
