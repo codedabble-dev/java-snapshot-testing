@@ -6,6 +6,6 @@ updates:
       interval: "weekly"
       day: "friday"
     assignees:
-      - "codedabble-dev"
+      - "jackmatt2"
     labels:
       - "dependencies"
