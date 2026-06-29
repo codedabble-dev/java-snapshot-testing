@@ -56,7 +56,6 @@ jobs:
           WITH_V: false
           DRY_RUN: true
       - name: publish
-        continue-on-error: true
         env:
           SNAPSHOT_VERSION: ${{ steps.tag_version_dry_run.outputs.tag }}-SNAPSHOT
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY_ASCII_ARMOR }}

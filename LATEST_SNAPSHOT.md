@@ -15,6 +15,6 @@ dependencies {
 
     // Replace {FRAMEWORK} with you testing framework
     // Replace {X.X.X} with the version number from `/gradle.properties`
-    testCompile "io.github.origin-energy:java-snapshot-testing-{FRAMEWORK}:{X.X.X}-SNAPSHOT"
+    testCompile "io.github.codedabble-dev:java-snapshot-testing-{FRAMEWORK}:{X.X.X}-SNAPSHOT"
 }
 ```

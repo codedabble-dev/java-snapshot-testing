@@ -18,11 +18,11 @@ publishing {
         pom {
             name = 'java-snapshot-testing'
             description = 'Snapshot Testing for Java'
-            url = 'https://github.com/origin-energy/java-snapshot-testing'
+            url = 'https://github.com/codedabble-dev/java-snapshot-testing'
 
             scm {
-                connection = 'scm:git:https://github.com/origin-energy/java-snapshot-testing'
-                url = 'https://github.com/origin-energy/java-snapshot-testing'
+                connection = 'scm:git:https://github.com/codedabble-dev/java-snapshot-testing'
+                url = 'https://github.com/codedabble-dev/java-snapshot-testing'
             }
 
             licenses {
@@ -36,7 +36,7 @@ publishing {
                 developer {
                     id = 'jack.matthews'
                     name = 'Jack Matthews'
-                    email = 'jack.matthews@origin.com.au'
+                    email = 'dev@codedabble.com'
                 }
             }
 
@@ -66,13 +66,17 @@ afterEvaluate {
 }
 
 if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
+    def snapshotRepositoryUrl = 'https://central.sonatype.com/repository/maven-snapshots/'
+    def releaseRepositoryUrl = 'https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/'
+    def stagingServerUrl = 'https://ossrh-staging-api.central.sonatype.com/service/local/'
+
     publishing {
         repositories {
             maven {
                 name = 'sonatype'
                 url = uri(project.version.toString().endsWith('-SNAPSHOT')
-                    ? 'https://oss.sonatype.org/content/repositories/snapshots/'
-                    : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+                    ? snapshotRepositoryUrl
+                    : releaseRepositoryUrl)
                 credentials {
                     username = project.property("ossrhUsername")
                     password = project.property("ossrhPassword")
@@ -82,8 +86,9 @@ if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")
     }
 
     nexusStaging {
+        serverUrl stagingServerUrl
         username project.property("ossrhUsername")
         password project.property("ossrhPassword")
-        packageGroup 'io.github.origin-energy'
+        packageGroup 'io.github.codedabble-dev'
     }
 }
