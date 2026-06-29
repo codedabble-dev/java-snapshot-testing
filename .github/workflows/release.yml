@@ -57,4 +57,3 @@ jobs:
         with:
           body: ${{steps.github_release.outputs.changelog}}
           tag_name: ${{ steps.tag_version.outputs.tag }}
-          files: java-snapshot-testing-*/build/libs/*.jar
