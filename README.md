@@ -1,5 +1,5 @@
-[![Build Status](https://github.com/jackmatt2/java-snapshot-testing/workflows/build/badge.svg)](https://github.com/jackmatt2/java-snapshot-testing/actions)
-[![JitPack](https://jitpack.io/v/jackmatt2/java-snapshot-testing.svg)](https://jitpack.io/#jackmatt2/java-snapshot-testing)
+[![Build Status](https://github.com/codedabble-dev/java-snapshot-testing/workflows/build/badge.svg)](https://github.com/codedabble-dev/java-snapshot-testing/actions)
+[![JitPack](https://jitpack.io/v/codedabble-dev/java-snapshot-testing.svg)](https://jitpack.io/#codedabble-dev/java-snapshot-testing)
 
 # Java Snapshot Testing
 - Inspired by [facebook's Jest framework](https://facebook.github.io/jest/docs/en/snapshot-testing.html)
@@ -7,9 +7,9 @@
 🎉 4.+ is out
 
 ## Upgrading
-- Upgrade guide from 3.X to 4.X [here](https://github.com/jackmatt2/java-snapshot-testing/discussions/94)
-- Upgrade guide from 2.X to 3.X [here](https://github.com/jackmatt2/java-snapshot-testing/discussions/73)
-- Upgrade guide from 2.X-BETA to 2.X [here](https://github.com/jackmatt2/java-snapshot-testing/discussions/58)
+- Upgrade guide from 3.X to 4.X [here](https://github.com/codedabble-dev/java-snapshot-testing/discussions/94)
+- Upgrade guide from 2.X to 3.X [here](https://github.com/codedabble-dev/java-snapshot-testing/discussions/73)
+- Upgrade guide from 2.X-BETA to 2.X [here](https://github.com/codedabble-dev/java-snapshot-testing/discussions/58)
 
 ## The testing framework loved by ~~lazy~~ __productive__ devs
 
@@ -146,7 +146,7 @@ data.
 - Does not give great insight to why the snapshot failed
 - Can be difficult to troll though large snapshot changes where you might only be interested in a small set of fields
 
-## Installation [JitPack](https://jitpack.io/#jackmatt2/java-snapshot-testing)
+## Installation [JitPack](https://jitpack.io/#codedabble-dev/java-snapshot-testing)
 
 Add JitPack to your build repositories:
 
@@ -339,7 +339,7 @@ public class JUnit4RulesExample {
 }
 ```
 
-See the [ParameterizedTest](https://github.com/jackmatt2/java-snapshot-testing/blob/master/java-snapshot-testing-junit4/src/test/java/au/com/origin/snapshots/ParameterizedTest.java) for an example implementation
+See the [ParameterizedTest](https://github.com/codedabble-dev/java-snapshot-testing/blob/master/java-snapshot-testing-junit4/src/test/java/au/com/origin/snapshots/ParameterizedTest.java) for an example implementation
 
 ## [Spock](http://spockframework.org/)
 

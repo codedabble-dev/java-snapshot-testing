@@ -18,11 +18,11 @@ publishing {
         pom {
             name = 'java-snapshot-testing'
             description = 'Snapshot Testing for Java'
-            url = 'https://github.com/jackmatt2/java-snapshot-testing'
+            url = 'https://github.com/codedabble-dev/java-snapshot-testing'
 
             scm {
-                connection = 'scm:git:https://github.com/jackmatt2/java-snapshot-testing'
-                url = 'https://github.com/jackmatt2/java-snapshot-testing'
+                connection = 'scm:git:https://github.com/codedabble-dev/java-snapshot-testing'
+                url = 'https://github.com/codedabble-dev/java-snapshot-testing'
             }
 
             licenses {
