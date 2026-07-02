@@ -6,11 +6,11 @@ name: build
 on:
   push:
     branches:
-      - master
+      - main
       - 'release/**'
   pull_request:
     branches:
-      - master
+      - main
       - 'release/**'
   workflow_dispatch:
 
@@ -34,7 +34,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     name: Deploy SNAPSHOT
     runs-on: ubuntu-latest
     steps:

@@ -346,7 +346,7 @@ public class JUnit4RulesExample {
 }
 ```
 
-See the [ParameterizedTest](https://github.com/codedabble-dev/java-snapshot-testing/blob/master/java-snapshot-testing-junit4/src/test/java/au/com/origin/snapshots/ParameterizedTest.java) for an example implementation
+See the [ParameterizedTest](https://github.com/codedabble-dev/java-snapshot-testing/blob/main/java-snapshot-testing-junit4/src/test/java/au/com/origin/snapshots/ParameterizedTest.java) for an example implementation
 
 ## [Spock](http://spockframework.org/)
 
