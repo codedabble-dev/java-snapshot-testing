@@ -11,7 +11,7 @@ dependencies {
     testImplementation project(':java-snapshot-testing-core')
     testImplementation "org.slf4j:slf4j-simple:${project.slf4jVersion}"
     testImplementation "org.assertj:assertj-core:${project.assertjVersion}"
-    testImplementation 'org.skyscreamer:jsonassert:1.5.0'
+    testImplementation 'org.skyscreamer:jsonassert:1.5.3'
 
     testImplementation 'com.fasterxml.jackson.core:jackson-core:2.16.0'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
