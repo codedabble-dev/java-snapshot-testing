@@ -4,14 +4,18 @@ import au.com.origin.snapshots.Expect
 import au.com.origin.snapshots.SnapshotVerifier
 import au.com.origin.snapshots.logging.LoggingHelper
 import au.com.origin.snapshots.utils.ReflectionUtils
+import groovy.transform.CompileStatic
+import java.lang.reflect.Field
 import java.lang.reflect.Method
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.spockframework.runtime.extension.AbstractMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
 
 // Based on this issue: https://github.com/spockframework/spock/issues/652
+@CompileStatic
 class SnapshotMethodInterceptor extends AbstractMethodInterceptor {
-	private log = LoggerFactory.getLogger( SnapshotMethodInterceptor.class )
+	private final Logger log = LoggerFactory.getLogger( SnapshotMethodInterceptor.class )
 	private final SnapshotVerifier snapshotVerifier;
 
 	SnapshotMethodInterceptor(SnapshotVerifier snapshotVerifier) {
@@ -28,8 +32,9 @@ class SnapshotMethodInterceptor extends AbstractMethodInterceptor {
 			System.arraycopy invocation.arguments, 0, newArguments, 0, invocation.arguments.length
 			invocation.arguments = newArguments
 		}
-		invocation.method.reflection.parameterTypes.eachWithIndex { type, i ->
-			if (Expect.class == type) {
+		def parameterTypes = invocation.method.reflection.parameterTypes
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (Expect.class == parameterTypes[i]) {
 				LoggingHelper.deprecatedV5(log, "Injecting 'Expect' via method a argument is no longer recommended. Consider using instance variable injection instead.")
 				invocation.arguments[i] = new Expect(snapshotVerifier, invocation.feature.featureMethod.reflection)
 			}
@@ -38,8 +43,8 @@ class SnapshotMethodInterceptor extends AbstractMethodInterceptor {
 	}
 
 	private void updateInstanceVariable(Object testInstance, Method testMethod) {
-		ReflectionUtils.findFieldByPredicate(testInstance.class, { field -> field.getType() == Expect.class })
-		.ifPresent({ field ->
+		ReflectionUtils.findFieldByPredicate(testInstance.class, { Field field -> field.getType() == Expect.class })
+		.ifPresent({ Field field ->
 			Expect expect = Expect.of(snapshotVerifier, testMethod);
 			ReflectionUtils.makeAccessible(field);
 			try {
